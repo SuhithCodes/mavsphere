@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function HomepageContent() {
+export function HomePageContent() {
   const [postContent, setPostContent] = useState('')
   const username = 'JohnDoe'
 

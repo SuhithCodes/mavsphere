@@ -1,32 +1,26 @@
 
 import React from 'react'
+import { HomePageContent } from './pages/home-page'
+import { NetworkingPageComponent } from './pages/networking-page'
 import { LayoutComponent } from './pages/layout-component'
 import { ProfileContent } from './pages/profile-page'
-import { HomepageContent } from './pages/home-page'
 import { SettingsPageComponent } from './pages/settings-page'
-import { NetworkingPageComponent } from './pages/networking-page'
 import { ForumComponent } from './pages/forum-page'
+import { LoginSignupComponent } from './pages/login-signup-page'
+import { CareerDevelopmentComponent } from './pages/career-development-page'
+import { JobBoardComponent } from './pages/opportunities-page'
 
-// export default function ProfilePage() {
+
+// export default function LoginSignupPage() {
 //   return (
-//     <LayoutComponent>
-//         <ProfileContent />
-//     </LayoutComponent>
+//         <LoginSignupComponent />
 //   )
 // }
 
 // export default function HomePage() {
 //   return (
 //     <LayoutComponent>
-//         <HomepageContent />
-//     </LayoutComponent>
-//   )
-// }
-
-// export default function SettingsPage() {
-//   return (
-//     <LayoutComponent>
-//         <SettingsPageComponent />
+//         <HomePageContent />
 //     </LayoutComponent>
 //   )
 // }
@@ -39,11 +33,45 @@ import { ForumComponent } from './pages/forum-page'
 //   )
 // }
 
-export default function ForumPage() {
+// export default function ForumPage() {
+//   return (
+//     <LayoutComponent>
+//         <ForumComponent />
+//     </LayoutComponent>
+//   )
+// }
+//
+
+export default function OppPage() {
   return (
     <LayoutComponent>
-        <ForumComponent />
+        <JobBoardComponent />
     </LayoutComponent>
   )
 }
 
+// export default function CareerDevPage() {
+//   return (
+//     <LayoutComponent>
+//         <CareerDevelopmentComponent />
+//     </LayoutComponent>
+//   )
+// }
+
+
+
+// export default function SettingsPage() {
+//   return (
+//     <LayoutComponent>
+//         <SettingsPageComponent />
+//     </LayoutComponent>
+//   )
+// }
+
+// export default function ProfilePage() {
+//   return (
+//     <LayoutComponent>
+//         <ProfileContent />
+//     </LayoutComponent>
+//   )
+// }
