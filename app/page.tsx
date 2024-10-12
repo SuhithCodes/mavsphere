@@ -56,21 +56,21 @@ import { LandingPageComponent } from './pages/landing-page'
 //   )
 // }
 
-// export default function CareerDevPage() {
-//   return (
-//     <LayoutComponent>
-//         <CareerDevelopmentComponent />
-//     </LayoutComponent>
-//   )
-// }
-
-export default function SettingsPage() {
+export default function CareerDevPage() {
   return (
     <LayoutComponent>
-        <SettingsPageComponent />
+        <CareerDevelopmentComponent />
     </LayoutComponent>
   )
 }
+
+// export default function SettingsPage() {
+//   return (
+//     <LayoutComponent>
+//         <SettingsPageComponent />
+//     </LayoutComponent>
+//   )
+// }
 
 // export default function ProfilePage() {
 //   return (
