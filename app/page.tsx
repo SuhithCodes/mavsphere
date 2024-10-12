@@ -9,7 +9,13 @@ import { ForumComponent } from './pages/forum-page'
 import { LoginSignupComponent } from './pages/login-signup-page'
 import { CareerDevelopmentComponent } from './pages/career-development-page'
 import { JobBoardComponent } from './pages/opportunities-page'
+import { LandingPageComponent } from './pages/landing-page'
 
+// export default function LandingPage() {
+//   return (
+//         <LandingPageComponent />
+//   )
+// }
 
 // export default function LoginSignupPage() {
 //   return (
@@ -40,15 +46,15 @@ import { JobBoardComponent } from './pages/opportunities-page'
 //     </LayoutComponent>
 //   )
 // }
-//
 
-export default function OppPage() {
-  return (
-    <LayoutComponent>
-        <JobBoardComponent />
-    </LayoutComponent>
-  )
-}
+
+// export default function OppPage() {
+//   return (
+//     <LayoutComponent>
+//         <JobBoardComponent />
+//     </LayoutComponent>
+//   )
+// }
 
 // export default function CareerDevPage() {
 //   return (
@@ -58,15 +64,13 @@ export default function OppPage() {
 //   )
 // }
 
-
-
-// export default function SettingsPage() {
-//   return (
-//     <LayoutComponent>
-//         <SettingsPageComponent />
-//     </LayoutComponent>
-//   )
-// }
+export default function SettingsPage() {
+  return (
+    <LayoutComponent>
+        <SettingsPageComponent />
+    </LayoutComponent>
+  )
+}
 
 // export default function ProfilePage() {
 //   return (
