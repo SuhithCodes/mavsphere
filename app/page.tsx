@@ -2,7 +2,7 @@
 import React from 'react'
 import { LayoutComponent } from './pages/layout-component'
 import { ProfileContent } from './pages/profile-page'
-import { Homepage } from './pages/home-page'
+import { HomepageContent } from './pages/home-page'
 import { SettingsPageComponent } from './pages/settings-page'
 import { NetworkingPageComponent } from './pages/networking-page'
 import { ForumComponent } from './pages/forum-page'
@@ -10,7 +10,7 @@ import { ForumComponent } from './pages/forum-page'
 // export default function ProfilePage() {
 //   return (
 //     <LayoutComponent>
-//         <ForumComponent />
+//         <ProfileContent />
 //     </LayoutComponent>
 //   )
 // }
@@ -18,7 +18,7 @@ import { ForumComponent } from './pages/forum-page'
 // export default function HomePage() {
 //   return (
 //     <LayoutComponent>
-//         <ForumComponent />
+//         <HomepageContent />
 //     </LayoutComponent>
 //   )
 // }
@@ -26,7 +26,7 @@ import { ForumComponent } from './pages/forum-page'
 // export default function SettingsPage() {
 //   return (
 //     <LayoutComponent>
-//         <ForumComponent />
+//         <SettingsPageComponent />
 //     </LayoutComponent>
 //   )
 // }
@@ -34,7 +34,7 @@ import { ForumComponent } from './pages/forum-page'
 // export default function NetworkingPage() {
 //   return (
 //     <LayoutComponent>
-//         <ForumComponent />
+//         <NetworkingPageComponent />
 //     </LayoutComponent>
 //   )
 // }
