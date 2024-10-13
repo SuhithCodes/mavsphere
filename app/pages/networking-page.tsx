@@ -15,7 +15,7 @@ export function NetworkingPageComponent() {
   const [selectedChat, setSelectedChat] = useState(null)
   const [selectedGroup, setSelectedGroup] = useState(null)
   const [networkingTab, setNetworkingTab] = useState('messaging')
-  const exploreForumsRef = useRef(null)
+  const exploreForumsRef = useRef<HTMLDivElement | null>(null);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode)
