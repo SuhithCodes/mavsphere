@@ -1,15 +1,15 @@
 
-import React from 'react'
-import { HomePageContent } from './pages/home-page'
-import { NetworkingPageComponent } from './pages/networking-page'
-import { LayoutComponent } from './pages/layout-component'
-import { ProfileContent } from './pages/profile-page'
-import { SettingsPageComponent } from './pages/settings-page'
-import { ForumComponent } from './pages/forum-page'
-import { LoginSignupComponent } from './pages/login-signup-page'
-import { CareerDevelopmentComponent } from './pages/career-development-page'
-import { JobBoardComponent } from './pages/opportunities-page'
-import { LandingPageComponent } from './pages/landing-page'
+// import React from 'react'
+// import { HomePageContent } from './pages/home-page'
+// import { NetworkingPageComponent } from './pages/networking-page'
+// import { LayoutComponent } from './pages/layout-component'
+// import { ProfileContent } from './pages/profile-page'
+// import { SettingsPageComponent } from './pages/settings-page'
+// import { ForumComponent } from './pages/forum-page'
+// import { LoginSignupComponent } from './pages/login-signup-page'
+// import { CareerDevelopmentComponent } from './pages/career-development-page'
+// import { JobBoardComponent } from './pages/opportunities-page'
+// import { LandingPageComponent } from './pages/landing-page'
 
 // export default function LandingPage() {
 //   return (
@@ -56,13 +56,13 @@ import { LandingPageComponent } from './pages/landing-page'
 //   )
 // }
 
-export default function CareerDevPage() {
-  return (
-    <LayoutComponent>
-        <CareerDevelopmentComponent />
-    </LayoutComponent>
-  )
-}
+// export default function CareerDevPage() {
+//   return (
+//     <LayoutComponent>
+//         <CareerDevelopmentComponent />
+//     </LayoutComponent>
+//   )
+// }
 
 // export default function SettingsPage() {
 //   return (
@@ -79,3 +79,40 @@ export default function CareerDevPage() {
 //     </LayoutComponent>
 //   )
 // }
+
+'use client';
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LayoutComponent } from './pages/layout-component';
+import { HomePageContent } from './pages/home-page';
+import { LandingPageComponent } from './pages/landing-page';
+import { NetworkingPageComponent } from './pages/networking-page';
+import { ProfileContent } from './pages/profile-page';
+import { SettingsPageComponent } from './pages/settings-page';
+import { ForumComponent } from './pages/forum-page';
+import { CareerDevelopmentComponent } from './pages/career-development-page';
+import { JobBoardComponent } from './pages/opportunities-page';
+import { LoginSignupComponent } from './pages/login-signup-page';
+
+function App() {
+  return (
+    <Router>
+      <LayoutComponent>
+        <Routes>
+          <Route path="/" element={<LandingPageComponent />} />
+          <Route path="/home" element={<HomePageContent />} />
+          <Route path="/networking" element={<NetworkingPageComponent />} />
+          <Route path="/profile" element={<ProfileContent />} />
+          <Route path="/settings" element={<SettingsPageComponent />} />
+          <Route path="/forums" element={<ForumComponent />} />
+          <Route path="/career-development" element={<CareerDevelopmentComponent />} />
+          <Route path="/opportunities" element={<JobBoardComponent />} />
+          <Route path="/login" element={<LoginSignupComponent />} />
+        </Routes>
+      </LayoutComponent>
+    </Router>
+  );
+}
+
+export default App;

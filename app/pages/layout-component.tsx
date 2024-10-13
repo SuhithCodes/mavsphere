@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { Search, ChevronDown, Home, MessageSquare, Users, Briefcase, Calendar, BookOpen, Settings, User, Moon, Sun, LogOut, ChevronRight, Bell, Sparkles } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -31,6 +32,16 @@ export function LayoutComponent({ children }: LayoutComponentProps) {
   const [currentPage, setCurrentPage] = useState('Home')
   const [breadcrumbs, setBreadcrumbs] = useState(['Home'])
 
+  const navigate = useNavigate();
+  
+  const handleSettingClick = () => {
+    updatePage('Settings');
+    navigate('/settings');
+  };
+  const handleHomeClick = () => {
+    updatePage('Home');
+    navigate('/home');
+  };
   const username = 'John Doe'
 
   useEffect(() => {
@@ -82,108 +93,111 @@ export function LayoutComponent({ children }: LayoutComponentProps) {
               <Button
                 variant={currentPage === 'Home' ? "secondary" : "ghost"}
                 className="w-full justify-start py-4"
-                onClick={() => updatePage('Home')}
+                onClick={handleHomeClick}
               >
                 <Home className="mr-2 h-4 w-4" />
                 Home
               </Button>
             </li>
             <li>
-              <Collapsible open={isNetworkingOpen} onOpenChange={setIsNetworkingOpen}>
-                <CollapsibleTrigger asChild>
-                  <Button
-                    variant={['Messaging', 'Groups', 'Forums'].includes(currentPage) ? "secondary" : "ghost"}
-                    className="w-full justify-start py-4"
-                  >
-                    <Users className="mr-2 h-4 w-4" />
-                    Networking
-                    <ChevronDown className="ml-auto h-4 w-4" />
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pl-6 space-y-2">
-                  <Button
-                    variant={currentPage === 'Messaging' ? "secondary" : "ghost"}
-                    className="w-full justify-start py-2"
-                    onClick={() => updatePage('Messaging')}
-                  >
-                    Messaging
-                  </Button>
-                  <Button
-                    variant={currentPage === 'Groups' ? "secondary" : "ghost"}
-                    className="w-full justify-start py-2"
-                    onClick={() => updatePage('Groups')}
-                  >
-                    Groups
-                  </Button>
-                  <Button
-                    variant={currentPage === 'Forums' ? "secondary" : "ghost"}
-                    className="w-full justify-start py-2"
-                    onClick={() => updatePage('Forums')}
-                  >
-                    Forums
-                  </Button>
-                </CollapsibleContent>
-              </Collapsible>
+              {/* <Collapsible open={isNetworkingOpen} onOpenChange={setIsNetworkingOpen}> */}
+                {/* <CollapsibleTrigger asChild> */}
+              <Button
+                variant={['Messaging', 'Groups', 'Forums'].includes(currentPage) ? "secondary" : "ghost"}
+                className="w-full justify-start py-4"
+                onClick={() => navigate('/networking')}
+              >
+                <Users className="mr-2 h-4 w-4" />
+                Networking
+                {/* <ChevronDown className="ml-auto h-4 w-4" /> */}
+              </Button>
+                {/* </CollapsibleTrigger> */}
+                {/* <CollapsibleContent className="pl-6 space-y-2"> */}
+                  {/* <Button */}
+                    {/* variant={currentPage === 'Messaging' ? "secondary" : "ghost"} */}
+                    {/* className="w-full justify-start py-2" */}
+                    {/* onClick={() => updatePage('Messaging')} */}
+                  {/* > */}
+                    {/* Messaging */}
+                  {/* </Button> */}
+                  {/* <Button */}
+                    {/* variant={currentPage === 'Groups' ? "secondary" : "ghost"} */}
+                    {/* className="w-full justify-start py-2" */}
+                    {/* onClick={() => updatePage('Groups')} */}
+                  {/* > */}
+                    {/* Groups */}
+                  {/* </Button> */}
+                  {/* <Button */}
+                    {/* variant={currentPage === 'Forums' ? "secondary" : "ghost"} */}
+                    {/* className="w-full justify-start py-2" */}
+                    {/* onClick={() => updatePage('Forums')} */}
+                  {/* > */}
+                    {/* Forums */}
+                  {/* </Button> */}
+                {/* </CollapsibleContent> */}
+              {/* </Collapsible> */}
             </li>
             <li>
-              <Collapsible open={isOpportunitiesOpen} onOpenChange={setIsOpportunitiesOpen}>
-                <CollapsibleTrigger asChild>
+              {/* <Collapsible open={isOpportunitiesOpen} onOpenChange={setIsOpportunitiesOpen}> */}
+                {/* <CollapsibleTrigger asChild> */}
                   <Button
                     variant={['Job Board', 'Internship Board'].includes(currentPage) ? "secondary" : "ghost"}
                     className="w-full justify-start py-4"
+                    onClick={() => navigate('/opportunities')}
                   >
                     <Briefcase className="mr-2 h-4 w-4" />
                     Opportunities
-                    <ChevronDown className="ml-auto h-4 w-4" />
+                    {/* <ChevronDown className="ml-auto h-4 w-4" /> */}
                   </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pl-6 space-y-2">
-                  <Button
-                    variant={currentPage === 'Job Board' ? "secondary" : "ghost"}
-                    className="w-full justify-start py-2"
-                    onClick={() => updatePage('Job Board')}
-                  >
-                    Job Board
-                  </Button>
-                  <Button
-                    variant={currentPage === 'Internship Board' ? "secondary" : "ghost"}
-                    className="w-full justify-start py-2"
-                    onClick={() => updatePage('Internship Board')}
-                  >
-                    Internship Board
-                  </Button>
-                </CollapsibleContent>
-              </Collapsible>
+                {/* </CollapsibleTrigger> */}
+                {/* <CollapsibleContent className="pl-6 space-y-2"> */}
+                  {/* <Button */}
+                    {/* variant={currentPage === 'Job Board' ? "secondary" : "ghost"} */}
+                    {/* className="w-full justify-start py-2" */}
+                    {/* onClick={() => updatePage('Job Board')} */}
+                  {/* > */}
+                    {/* Job Board */}
+                  {/* </Button> */}
+                  {/* <Button */}
+                    {/* variant={currentPage === 'Internship Board' ? "secondary" : "ghost"} */}
+                    {/* className="w-full justify-start py-2" */}
+                    {/* onClick={() => updatePage('Internship Board')} */}
+                  {/* > */}
+                    {/* Internship Board */}
+                  {/* </Button> */}
+                {/* </CollapsibleContent> */}
+              {/* </Collapsible> */}
             </li>
             <li>
-              <Collapsible open={isResourcesOpen} onOpenChange={setIsResourcesOpen}>
-                <CollapsibleTrigger asChild>
+              {/* <Collapsible open={isResourcesOpen} onOpenChange={setIsResourcesOpen}> */}
+                {/* <CollapsibleTrigger asChild> */}
                   <Button
                     variant={['Career Development', 'Mentorship Program'].includes(currentPage) ? "secondary" : "ghost"}
                     className="w-full justify-start py-4"
+                    onClick={() => navigate('/career-development')}
                   >
                     <BookOpen className="mr-2 h-4 w-4" />
                     Resources
-                    <ChevronDown className="ml-auto h-4 w-4" />
+                    {/* <ChevronDown className="ml-auto h-4 w-4" /> */}
                   </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pl-6 space-y-2">
-                  <Button
-                    variant={currentPage === 'Career Development' ? "secondary" : "ghost"}
-                    className="w-full justify-start py-2"
-                    onClick={() => updatePage('Career Development')}
-                  >
-                    Career Development
-                  </Button>
-                  <Button
-                    variant={currentPage === 'Mentorship Program' ? "secondary" : "ghost"}
-                    className="w-full justify-start py-2"
-                    onClick={() => updatePage('Mentorship Program')}
-                  >
-                    Mentorship Program
-                  </Button>
-                </CollapsibleContent>
-              </Collapsible>
+                {/* </CollapsibleTrigger> */}
+                {/* <CollapsibleContent className="pl-6 space-y-2"> */}
+                  {/* <Button */}
+                    {/* variant={currentPage === 'Career Development' ? "secondary" : "ghost"} */}
+                    {/* className="w-full justify-start py-2" */}
+                    {/* onClick={() => updatePage('Career Development')} */}
+                  {/* > */}
+                    {/* Career Development */}
+                  {/* </Button> */}
+                  {/* <Button */}
+                    {/* variant={currentPage === 'Mentorship Program' ? "secondary" : "ghost"} */}
+                    {/* className="w-full justify-start py-2" */}
+                    {/* onClick={() => updatePage('Mentorship Program')} */}
+                  {/* > */}
+                    {/* Mentorship Program */}
+                  {/* </Button> */}
+                {/* </CollapsibleContent> */}
+              {/* </Collapsible> */}
             </li>
             <li>
               <Button
@@ -199,7 +213,7 @@ export function LayoutComponent({ children }: LayoutComponentProps) {
               <Button
                 variant={currentPage === 'Settings' ? "secondary" : "ghost"}
                 className="w-full justify-start py-4"
-                onClick={() => updatePage('Settings')}
+                onClick={handleSettingClick}
               >
                 <Settings className="mr-2 h-4 w-4" />
                 Settings
@@ -249,11 +263,11 @@ export function LayoutComponent({ children }: LayoutComponentProps) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/settings')}>
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Settings</span>
                 </DropdownMenuItem>
