@@ -15,18 +15,9 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import PropTypes from "prop-types";
 
-interface ProfileInformationProps {
-  username: string;
-  graduationYear?: number;
-  role: "mentor" | "mentee";
-}
-
-export function ProfileInformation({
-  username,
-  graduationYear,
-  role,
-}: ProfileInformationProps) {
+export function ProfileInformation({ username, graduationYear, role }) {
   const getStudentStatus = () => {
     const currentYear = new Date().getFullYear();
     return graduationYear && graduationYear < currentYear
@@ -253,3 +244,13 @@ Autonomous Navigation in Unstructured Environments, IEEE Conference on Automatio
     </Card>
   );
 }
+
+ProfileInformation.propTypes = {
+  username: PropTypes.string.isRequired,
+  graduationYear: PropTypes.number,
+  role: PropTypes.oneOf(["mentor", "mentee"]).isRequired,
+};
+
+ProfileInformation.defaultProps = {
+  graduationYear: undefined,
+};

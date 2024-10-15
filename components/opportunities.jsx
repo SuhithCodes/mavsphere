@@ -3,10 +3,6 @@
 import React, { useState } from "react";
 import { ChevronsUpDownIcon, ChevronDownIcon, Plus } from "lucide-react";
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -54,20 +50,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-type JobListing = {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  type: string;
-  salaryRange: string;
-  datePosted: string;
-  experienceLevel: string;
-  industry: string;
-  skillsRequired: string[];
-};
-
-const jobListings: JobListing[] = [
+const jobListings = [
   {
     id: "1",
     title: "Software Engineer",
@@ -95,7 +78,7 @@ const jobListings: JobListing[] = [
   // Add more job listings here...
 ];
 
-const internshipListings: JobListing[] = [
+const internshipListings = [
   {
     id: "1",
     title: "Software Engineering Intern",
@@ -123,12 +106,13 @@ const internshipListings: JobListing[] = [
   // Add more internship listings here...
 ];
 
-const columns: ColumnDef<JobListing>[] = [
+const columns = [
   {
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        checked={table.getIsAllPageRowsSelected()} // Must be true or false
+        // Must be true or false
+        checked={table.getIsAllPageRowsSelected()}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />
@@ -196,9 +180,7 @@ const columns: ColumnDef<JobListing>[] = [
   {
     accessorKey: "skillsRequired",
     header: "Skills Required",
-    cell: ({ row }) => (
-      <div>{(row.getValue("skillsRequired") as string[]).join(", ")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("skillsRequired").join(", ")}</div>,
   },
   {
     id: "actions",
@@ -230,13 +212,10 @@ const columns: ColumnDef<JobListing>[] = [
   },
 ];
 
-function DataTable({ data }: { data: JobListing[] }) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+function DataTable({ data }) {
+  const [sorting, setSorting] = React.useState([]);
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -263,7 +242,7 @@ function DataTable({ data }: { data: JobListing[] }) {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter job titles..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          value={table.getColumn("title")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }

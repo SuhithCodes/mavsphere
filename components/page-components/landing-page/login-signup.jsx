@@ -17,15 +17,8 @@ import {
 import { signIn, useSession } from "next-auth/react";
 import { v4 as uuidv4 } from "uuid";
 
-type AuthProps = {
-  isVisible: boolean;
-  onClose: () => void;
-  isDarkMode: boolean;
-  setIsLogin?: (value: boolean) => void;
-};
-
 // Login Component
-const Login: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
+const Login = ({ isVisible, onClose, isDarkMode }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -35,7 +28,7 @@ const Login: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
     description: "",
   });
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const result = await signIn("credentials", {
@@ -128,12 +121,7 @@ const Login: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
 };
 
 // Signup Component
-const Signup: React.FC<AuthProps> = ({
-  isVisible,
-  onClose,
-  isDarkMode,
-  setIsLogin,
-}) => {
+const Signup = ({ isVisible, onClose, isDarkMode, setIsLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -148,7 +136,7 @@ const Signup: React.FC<AuthProps> = ({
     description: "",
   });
 
-  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -326,7 +314,7 @@ const Signup: React.FC<AuthProps> = ({
 };
 
 // Main LoginSignup Component
-const LoginSignup: React.FC<AuthProps> = (props) => {
+const LoginSignup = (props) => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (

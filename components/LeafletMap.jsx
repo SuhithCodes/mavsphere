@@ -17,17 +17,8 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerIconShadow,
 });
 
-interface Coordinates {
-  lat: number | null;
-  lng: number | null;
-}
-
-interface LeafletMapProps {
-  address: string;
-}
-
-const LeafletMap: React.FC<LeafletMapProps> = ({ address }) => {
-  const [coordinates, setCoordinates] = useState<Coordinates>({
+const LeafletMap = ({ address }) => {
+  const [coordinates, setCoordinates] = useState({
     lat: null,
     lng: null,
   });
@@ -62,10 +53,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ address }) => {
     }
   }, [address]);
 
-  const position: LatLngExpression = [
-    coordinates.lat || 51.505,
-    coordinates.lng || -0.09,
-  ];
+  const position = [coordinates.lat || 51.505, coordinates.lng || -0.09];
 
   // Create custom icon using lucide-react's map-pin icon
   const customIcon = L.divIcon({

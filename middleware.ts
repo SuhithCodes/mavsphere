@@ -18,10 +18,5 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/settings/:path*",
-    "/mentor/:path*",
-    // Add other protected routes
-  ],
+  matcher: ["/mentor/:path*"],
 };

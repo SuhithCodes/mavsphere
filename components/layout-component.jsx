@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import {
@@ -43,15 +42,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useRouter, usePathname } from "next/navigation";
 
-interface LayoutComponentProps {
-  children: React.ReactNode;
-  childPage?: string;
-}
-
-export default function LayoutComponent({
-  children,
-  childPage,
-}: LayoutComponentProps) {
+export default function LayoutComponent({ children, childPage }) {
   const { data: session, status } = useSession();
   const username = session?.user?.username || "Guest";
 
@@ -61,7 +52,7 @@ export default function LayoutComponent({
   }
 
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
+  const [openCollapsible, setOpenCollapsible] = useState(null);
   const [currentPage, setCurrentPage] = useState(childPage || "Home");
   const [breadcrumbs, setBreadcrumbs] = useState(["Home"]);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -89,7 +80,7 @@ export default function LayoutComponent({
     setIsSidebarCollapsed(!isSidebarCollapsed);
   };
 
-  const updatePage = (page: string) => {
+  const updatePage = (page) => {
     setCurrentPage(page);
 
     if (page === "Home") {
@@ -105,18 +96,18 @@ export default function LayoutComponent({
     }
   };
 
-  const handlePageClick = (pageName: string, path: string) => {
+  const handlePageClick = (pageName, path) => {
     updatePage(pageName);
     router.push(path);
   };
 
-  const handleCollapsibleChange = (collapsibleName: string) => {
+  const handleCollapsibleChange = (collapsibleName) => {
     setOpenCollapsible((prev) =>
       prev === collapsibleName ? null : collapsibleName
     );
   };
 
-  const isSelected = (page: string) => {
+  const isSelected = (page) => {
     return (
       currentPage === page ||
       (openCollapsible === "Networking" &&
@@ -128,12 +119,7 @@ export default function LayoutComponent({
     );
   };
 
-  const renderSidebarItem = (
-    icon: React.ReactNode,
-    label: string,
-    onClick: () => void,
-    isOpen?: boolean
-  ) => (
+  const renderSidebarItem = (icon, label, onClick, isOpen) => (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
@@ -145,7 +131,7 @@ export default function LayoutComponent({
               } ${isSidebarCollapsed ? "px-0" : ""}`}
               onClick={onClick}
             >
-              {React.cloneElement(icon as React.ReactElement, {
+              {React.cloneElement(icon, {
                 className: `h-5 w-5 ${isSidebarCollapsed ? "" : "mr-2"}`,
               })}
               {!isSidebarCollapsed && (

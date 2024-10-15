@@ -83,7 +83,7 @@ const LandingPage = () => {
   // Process services data to include icon components
   const services = servicesData.map((service) => ({
     ...service,
-    icon: iconComponents[service.icon as keyof typeof iconComponents],
+    icon: iconComponents[service.icon],
   }));
 
   // Handle "Learn More" button click

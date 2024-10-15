@@ -4,6 +4,7 @@ import { compare } from "bcryptjs";
 import { query } from "@/lib/db";
 
 const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET || "your-development-secret",
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -17,7 +18,7 @@ const authOptions = {
         }
 
         try {
-          const rows: any = await query("SELECT * FROM users WHERE email = ?", [
+          const rows = await query("SELECT * FROM users WHERE email = ?", [
             credentials.email,
           ]);
 
@@ -59,10 +60,10 @@ const authOptions = {
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.id = token.sub as string;
-        session.user.email = token.email as string;
-        session.user.username = token.username as string;
-        session.user.is_mentor = token.is_mentor as boolean;
+        session.user.id = token.sub;
+        session.user.email = token.email;
+        session.user.username = token.username;
+        session.user.is_mentor = token.is_mentor;
       }
       return session;
     },
@@ -76,6 +77,6 @@ const authOptions = {
   },
 };
 
-const handler = NextAuth(authOptions as any);
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST, authOptions };
