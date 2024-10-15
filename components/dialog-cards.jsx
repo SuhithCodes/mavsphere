@@ -17,19 +17,19 @@ const LeafletMap = dynamic(() => import("@/components/LeafletMap"), {
   ssr: false,
 });
 
-interface DialogCardsComponentProps {
-  eventName: string;
-  organizers: string[];
-  address: string;
-  location: string;
-}
-
+/**
+ * @param {Object} props
+ * @param {string} props.eventName
+ * @param {string[]} props.organizers
+ * @param {string} props.address
+ * @param {string} props.location
+ */
 export default function DialogCardsComponent({
   eventName,
   organizers,
   address,
   location,
-}: DialogCardsComponentProps) {
+}) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>

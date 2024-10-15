@@ -35,7 +35,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Helper function to generate dates for the current week
-const getWeekDates = (date: Date) => {
+const getWeekDates = (date) => {
   const week = [];
   for (let i = 0; i < 7; i++) {
     const day = new Date(date);
@@ -46,7 +46,7 @@ const getWeekDates = (date: Date) => {
 };
 
 // Helper function to get dates for the mini calendar
-const getMonthDates = (year: number, month: number) => {
+const getMonthDates = (year, month) => {
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const daysInMonth = lastDay.getDate();
@@ -209,7 +209,7 @@ export default function EventsPage() {
     setCurrentDate(newDate);
   };
 
-  const handleDateClick = (date: Date) => {
+  const handleDateClick = (date) => {
     setSelectedDate(date);
     setCurrentDate(date);
   };
@@ -226,7 +226,7 @@ export default function EventsPage() {
     setCurrentDate(newDate);
   };
 
-  const hasEvents = (date: Date | null) => {
+  const hasEvents = (date) => {
     return (
       date &&
       events.some(
@@ -342,7 +342,10 @@ export default function EventsPage() {
                         id="organizer"
                         value={newEvent.organizer}
                         onChange={(e) =>
-                          setNewEvent({ ...newEvent, title: e.target.value })
+                          setNewEvent({
+                            ...newEvent,
+                            organizer: e.target.value,
+                          })
                         }
                         className="col-span-3"
                       />

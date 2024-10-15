@@ -1,0 +1,67 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "strict": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "components/settings-page.jsx",
+    "components/protected-route.jsx",
+    "components/profile-content.jsx",
+    "components/opportunities.jsx",
+    "components/networking-page.jsx",
+    "components/mentorship-program.jsx",
+    "components/mentorship-program.j/sx",
+    "components/LeafletMap.jsx",
+    "components/layout-component.jsx",
+    "components/landing-page.jsx",
+    "components/homepage.jsx",
+    "components/forum-page.jsx",
+    "components/events-page.jsx",
+    "components/dialog-cards.jsx",
+    "components/career-development.jsx",
+    "components/page-components/settings-page/profile-information.jsx",
+    "components/page-components/landing-page/NavigationItems.jsx",
+    "components/page-components/landing-page/login-signup.jsx",
+    "components/page-components/landing-page/Footer.jsx",
+    "components/page-components/landing-page/AboutUs.jsx",
+    "app/providers.jsx",
+    "app/page.jsx",
+    "app/layout.jsx",
+    "app/settings/page.jsx",
+    "app/resources/mentorship-program/page.jsx",
+    "app/resources/career-development/page.jsx",
+    "app/profile/page.jsx",
+    "app/opportunities/page.jsx",
+    "app/networking/messaging/page.jsx",
+    "app/networking/forums/page.jsx",
+    "app/home/page.jsx",
+    "app/events/page.jsx",
+    "app/api/roadmaps/route.js",
+    "app/api/auth/signup/route.js",
+    "app/api/auth/[...nextauth]/route.js"
+  ],
+  "exclude": ["node_modules"]
+}

@@ -15,20 +15,10 @@ import {
 } from "@/components/ui/table";
 import articles from "@/app/data/resources/career-development-page/articles.json";
 
-interface Roadmap {
-  id: number;
-  title: string;
-  description: string;
-  type: string;
-  category: string;
-  link: string;
-  download_link: string;
-}
-
 export default function CareerDevelopmentComponent() {
   const [selectedTipTopic, setSelectedTipTopic] = useState(null);
-  const [skillBasedRoadmaps, setSkillBasedRoadmaps] = useState<Roadmap[]>([]);
-  const [roleBasedRoadmaps, setRoleBasedRoadmaps] = useState<Roadmap[]>([]);
+  const [skillBasedRoadmaps, setSkillBasedRoadmaps] = useState([]);
+  const [roleBasedRoadmaps, setRoleBasedRoadmaps] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -84,7 +74,7 @@ export default function CareerDevelopmentComponent() {
     },
   ];
 
-  const RoadmapTable = ({ roadmaps }: { roadmaps: Roadmap[] }) => (
+  const RoadmapTable = ({ roadmaps }) => (
     <Table>
       <TableHeader>
         <TableRow>

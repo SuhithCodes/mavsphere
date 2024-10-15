@@ -6,11 +6,7 @@ import {
   FaLinkedin,
 } from "react-icons/fa6";
 
-interface FooterProps {
-  isDarkMode: boolean;
-}
-
-const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
+const Footer = ({ isDarkMode }) => {
   return (
     <footer
       className={`mt-12 py-8 ${

@@ -15,13 +15,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import teamMembersData from "@/app/data/landing-page/team-members.json";
 
-interface AboutUsProps {
-  isOpen: boolean;
-  onClose: () => void;
-  isDarkMode: boolean;
-}
-
-const AboutUs: React.FC<AboutUsProps> = ({ isOpen, onClose, isDarkMode }) => {
+/**
+ * @param {Object} props
+ * @param {boolean} props.isOpen
+ * @param {Function} props.onClose
+ * @param {boolean} props.isDarkMode
+ */
+const AboutUs = ({ isOpen, onClose, isDarkMode }) => {
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { hash } from "bcryptjs";
 
-export async function POST(req: Request) {
+export async function POST(req) {
   try {
     const { id, email, password, is_mentor, firstName, lastName, username } =
       await req.json();
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       return NextResponse.json({
         message: "User created successfully. Please sign in.",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error(
         "signup/route.ts: Database error:",
         error.code,
