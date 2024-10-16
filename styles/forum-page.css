@@ -1,0 +1,84 @@
+/* Name: Ghanathay, Suhith */
+/* Student ID: 1002170591 */
+/* Forum Page Styles */
+
+/* Main layout */
+.forum-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+.forum-main {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  padding: 2rem 1rem;
+}
+
+/* Sidebars */
+.forum-sidebar {
+  flex: 2.5;
+}
+
+.forum-sidebar-left {
+  padding-right: 1rem;
+}
+
+.forum-sidebar-right {
+  padding-left: 1rem;
+}
+
+/* Forum list */
+.forum-list {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.forum-card {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.forum-card:hover {
+  background-color: var(--accent);
+}
+
+/* Forum content */
+.forum-content {
+  flex: 5;
+}
+
+.forum-posts {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* Create forum button */
+.create-forum-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .forum-main {
+    flex-direction: column;
+  }
+
+  .forum-sidebar,
+  .forum-content {
+    flex: 1;
+    width: 100%;
+  }
+
+  .forum-sidebar-left,
+  .forum-sidebar-right {
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+}
