@@ -1,0 +1,39 @@
+{
+  "teamMembers": [
+    {
+      "name": "Suhith Ghanathay",
+      "avatar": "/placeholder.svg",
+      "designation": "Full Stack Developer",
+      "experience": "4 years",
+      "quote": "Innovation distinguishes between a leader and a follower."
+    },
+    {
+      "name": "Riddhi Jignesh Kumar",
+      "avatar": "/placeholder.svg",
+      "designation": "UI/UX Designer",
+      "experience": "4 years",
+      "quote": "Design is not just what it looks like and feels like. Design is how it works."
+    },
+    {
+      "name": "Mike Johnson",
+      "avatar": "/placeholder.svg",
+      "designation": "Data Scientist",
+      "experience": "6 years",
+      "quote": "Data is the new oil. It's valuable, but if unrefined it cannot really be used."
+    },
+    {
+      "name": "Emily Brown",
+      "avatar": "/placeholder.svg",
+      "designation": "Machine Learning Engineer",
+      "experience": "3 years",
+      "quote": "Machine learning is the science of getting computers to learn without being explicitly programmed."
+    },
+    {
+      "name": "Alex Lee",
+      "avatar": "/placeholder.svg",
+      "designation": "Project Manager",
+      "experience": "7 years",
+      "quote": "The art of management is to make difficult things easy."
+    }
+  ]
+}

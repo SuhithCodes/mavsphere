@@ -1,0 +1,45 @@
+{
+  "recentActivities": [
+    {
+      "activity": "New discussion: 'The Future of AI in Academia'",
+      "group": "AI Research Group",
+      "date": "2024-05-01"
+    },
+    {
+      "activity": "Job Posted: Assistant Professor in Computer Science",
+      "organization": "Tech University",
+      "date": "2024-04-28"
+    },
+    {
+      "activity": "New Resource: 'Guide to Publishing Your First Academic Paper'",
+      "author": "Dr. Jane Smith",
+      "date": "2024-04-25"
+    },
+    {
+      "activity": "Upcoming Event: International Conference on Climate Change",
+      "date": "2024-05-15"
+    }
+  ],
+  "upcomingEvents": [
+    {
+      "name": "AI and Machine Learning Symposium",
+      "date": "May 15-17, 2024",
+      "location": "Virtual"
+    },
+    {
+      "name": "Web Development Conference",
+      "date": "June 22-24, 2024",
+      "location": "Austin, TX"
+    },
+    {
+      "name": "Cybersecurity Summit",
+      "date": "July 10-12, 2024",
+      "location": "Dallas, TX"
+    },
+    {
+      "name": "Data Science Workshop",
+      "date": "August 5-7, 2024",
+      "location": "Houston, TX"
+    }
+  ]
+}

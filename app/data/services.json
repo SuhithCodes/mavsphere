@@ -1,0 +1,46 @@
+{
+  "services": [
+    {
+      "title": "Networking Opportunities",
+      "description": "Connect with professionals and peers in your field.",
+      "image": "/images/landing_page/undraw_social_networking_re_i1ex.svg?height=200&width=300&text=Networking",
+      "icon": "Users className=\"h-6 w-6\"",
+      "action": "Explore Networks"
+    },
+    {
+      "title": "Opportunities Board",
+      "description": "Find the latest job openings and internships.",
+      "image": "/images/landing_page/undraw_job_offers_re_634p.svg?height=200&width=300&text=Job+Board",
+      "icon": "Briefcase className=\"h-6 w-6\"",
+      "action": "Browse Jobs"
+    },
+    {
+      "title": "Career Development",
+      "description": "Access resources to boost your career growth.",
+      "image": "/images/landing_page/career-dev.svg?height=200&width=300&text=Career+Development",
+      "icon": "BookOpen className=\"h-6 w-6\"",
+      "action": "View Resources"
+    },
+    {
+      "title": "Mentorship Program",
+      "description": "Get guidance from experienced professionals in your industry.",
+      "image": "/images/landing_page/undraw_candidate_ubwv.svg?height=200&width=300&text=Mentorship",
+      "icon": "Users className=\"h-6 w-6\"",
+      "action": "Find a Mentor"
+    },
+    {
+      "title": "Skill and Role based Roadmaps",
+      "description": "Enhance your skills with our detailed Roadmaps.",
+      "image": "/images/landing_page/undraw_navigator_a479.svg?height=200&width=300&text=Workshops",
+      "icon": "BookOpen className=\"h-6 w-6\"",
+      "action": "Explore Roadmaps"
+    },
+    {
+      "title": "Industry Events",
+      "description": "Attend exclusive events and conferences in your field.",
+      "image": "/images/landing_page/undraw_events_re_98ue.svg?height=200&width=300&text=Events",
+      "icon": "Calendar className=\"h-6 w-6\"",
+      "action": "View Calendar"
+    }
+  ]
+}
