@@ -26,18 +26,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect } from "react";
 
-export default function NetworkingPageComponent({ childtab }) {
+export default function NetworkingPageComponent() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedChat, setSelectedChat] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
-  const [networkingTab, setNetworkingTab] = useState(childtab || "messaging");
-
-  // Update the networkingTab when childtab prop changes
-  useEffect(() => {
-    if (childtab) {
-      setNetworkingTab(childtab);
-    }
-  }, [childtab]);
+  const [networkingTab, setNetworkingTab] = useState("messaging");
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -131,7 +124,7 @@ export default function NetworkingPageComponent({ childtab }) {
           <TabsList className="w-full justify-start mb-4">
             <TabsTrigger value="messaging" className="flex-1">
               <MessageSquare className="mr-2 h-4 w-4" />
-              Messaging
+              Private
             </TabsTrigger>
             <TabsTrigger value="groups" className="flex-1">
               <Users className="mr-2 h-4 w-4" />

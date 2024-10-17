@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import {
   Moon,
+  X,
   Sun,
   MessageSquare,
   Users,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 import {
   FaFacebook,
+  FaGithub,
   FaSquareXTwitter,
   FaInstagram,
   FaLinkedin,
@@ -44,6 +46,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
+  DrawerClose,
 } from "@/components/ui/drawer";
 import {
   Table,
@@ -67,6 +70,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 type LoginSignupProps = {
   isVisible: boolean;
@@ -373,9 +377,28 @@ const LandingPage = () => {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Dashboard
-              </NavigationMenuLink>
+              <NavigationMenuTrigger>Home</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        href="/"
+                      >
+                        <div className="text-sm font-medium leading-none">
+                          Home Page
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Browse the recent activities across the various
+                          forums, view featuredProfiles, and notifications of
+                          your activities
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>Networking</NavigationMenuTrigger>
@@ -384,16 +407,15 @@ const LandingPage = () => {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         href="/"
                       >
-                        <MessageSquare className="h-6 w-6 mb-2" />
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          Messaging
+                        <div className="text-sm font-medium leading-none">
+                          Private Messaging
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Connect with peers and professionals through direct
-                          messaging.
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Talk to your mentors and your connections in a private
+                          chat.
                         </p>
                       </a>
                     </NavigationMenuLink>
@@ -474,24 +496,23 @@ const LandingPage = () => {
               <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
-                      >
-                        <BookOpen className="h-6 w-6 mb-2" />
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          Career Development
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Access articles, tools, and tips to boost your career
-                          growth.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
                   <li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="/"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Career Development
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Access Articles, Tools and Tips to boost your
+                            career.
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
                     <NavigationMenuLink asChild>
                       <a
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
@@ -511,9 +532,26 @@ const LandingPage = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Events
-              </NavigationMenuLink>
+              <NavigationMenuTrigger>Event</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        href="/"
+                      >
+                        <div className="text-sm font-medium leading-none">
+                          Events
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Access and List academic events and conferences
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -600,7 +638,7 @@ const LandingPage = () => {
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-40 object-cover mb-4 rounded"
+                    className="w-full h-75 object-cover mb-4 rounded"
                   />
                   <CardDescription
                     className={isDarkMode ? "text-gray-300" : "text-gray-600"}
@@ -798,47 +836,113 @@ const LandingPage = () => {
       </Dialog>
 
       <Drawer open={isAboutUsOpen} onOpenChange={setIsAboutUsOpen}>
-        <DrawerContent className={isDarkMode ? "bg-gray-800 text-white" : ""}>
-          <DrawerHeader>
-            <DrawerTitle>About Us</DrawerTitle>
-            <DrawerDescription className={isDarkMode ? "text-gray-300" : ""}>
-              Team MavSphere consists of graduate students from a university in
-              Texas who are passionate about technology and innovation. We aim
-              to create a platform that connects students, professionals, and
-              industry leaders to foster growth and collaboration in the tech
-              community.
+        <DrawerContent
+          className={`${isDarkMode ? "bg-gray-900 text-white" : "bg-white"}`}
+        >
+          <DrawerHeader className="sticky top-0 z-10 backdrop-blur-md bg-opacity-90 bg-inherit">
+            <div className="flex justify-between items-center">
+              <DrawerTitle className="text-4xl font-bold">
+                Team MavSphere
+              </DrawerTitle>
+              <DrawerClose asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <X className="h-8 w-8" />
+                </Button>
+              </DrawerClose>
+            </div>
+            <DrawerDescription
+              className={`mt-4 text-xl font-semibold ${
+                isDarkMode ? "text-gray-300" : "text-gray-600"
+              }`}
+            >
+              We aim to create a platform that connects students, professionals,
+              and industry leaders to foster growth and collaboration in the
+              tech community.
             </DrawerDescription>
           </DrawerHeader>
-          <div className="p-4 flex flex-wrap justify-center gap-4">
-            {teamMembers.map((member, index) => (
-              <Card
-                key={index}
-                className={`w-64 ${
-                  isDarkMode ? "bg-gray-700 text-white" : "bg-gray-100"
-                }`}
+          <div className="p-4">
+            <AnimatePresence>
+              <motion.div
+                className="flex flex-wrap gap-4 pb-4 justify-center" // Flex wrap and center the cards
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ staggerChildren: 0.1 }}
               >
-                <CardContent className="flex flex-col items-center p-4">
-                  <Avatar className="w-24 h-24 mb-4">
-                    <AvatarImage src={member.avatar} alt={member.name} />
-                    <AvatarFallback>
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <h4 className="text-lg font-semibold">{member.name}</h4>
-                  <p
-                    className={`text-sm ${
-                      isDarkMode ? "text-gray-300" : "text-gray-500"
-                    } mb-2`}
+                {teamMembers.map((member, index) => (
+                  <motion.div
+                    key={index}
+                    className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4" // Responsive widths
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    {member.designation} • {member.experience}
-                  </p>
-                  <p className="text-sm text-center italic">"{member.quote}"</p>
-                </CardContent>
-              </Card>
-            ))}
+                    <Card
+                      className={`h-full ${
+                        isDarkMode ? "bg-gray-800 text-white" : "bg-gray-50"
+                      } transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl`}
+                    >
+                      <CardContent className="p-6">
+                        <div className="flex flex-col items-center">
+                          <Avatar className="w-32 h-32 mb-4 border-4 border-primary">
+                            <AvatarImage
+                              src={member.avatar}
+                              alt={member.name}
+                            />
+                            <AvatarFallback className="text-2xl font-bold">
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+                          <h4 className="text-2xl font-semibold mb-2">
+                            {member.name}
+                          </h4>
+                          <p
+                            className={`text-lg font-semibold ${
+                              isDarkMode ? "text-gray-300" : "text-gray-600"
+                            } mb-2`}
+                          >
+                            {member.designation} • {member.experience}
+                          </p>
+                          <p className="text-base font-semibold text-center italic mb-4">
+                            "{member.quote}"
+                          </p>
+                          <div className="flex space-x-4">
+                            <a
+                              href={member.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-400 hover:text-primary transition-colors"
+                            >
+                              <FaGithub className="h-6 w-6" />
+                            </a>
+                            <a
+                              href={member.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-400 hover:text-primary transition-colors"
+                            >
+                              <FaLinkedin className="h-6 w-6" />
+                            </a>
+                            <a
+                              href={member.twitter}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-400 hover:text-primary transition-colors"
+                            >
+                              <FaSquareXTwitter className="h-6 w-6" />
+                            </a>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </DrawerContent>
       </Drawer>

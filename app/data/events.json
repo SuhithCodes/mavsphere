@@ -1,0 +1,211 @@
+[
+  {
+    "eventName": "Tech Innovations Conference",
+    "organizers": "Tech Co.",
+    "date": {
+      "month": "03",
+      "day": "15",
+      "year": "2025"
+    },
+    "time": "09:00 AM",
+    "duration": {
+      "minutes": 120
+    },
+    "location": "Convention Center, San Francisco, CA",
+    "type": "Conference",
+    "website": "https://techinnovationsconference.com",
+    "priority": "High",
+    "description": "A conference showcasing the latest in technology innovations.",
+    "notes": "Registration opens in January."
+  },
+  {
+    "eventName": "Annual Art Exhibition",
+    "organizers": "Art Guild",
+    "date": {
+      "month": "04",
+      "day": "20",
+      "year": "2025"
+    },
+    "time": "06:00 PM",
+    "duration": {
+      "minutes": 180
+    },
+    "location": "City Gallery, New York, NY",
+    "type": "Exhibition",
+    "website": "https://artguild.org/exhibition",
+    "priority": "Medium",
+    "description": "Showcasing local artists' work and installations.",
+    "notes": "Refreshments will be served."
+  },
+  {
+    "eventName": "Health & Wellness Fair",
+    "organizers": "Wellness Initiative",
+    "date": {
+      "month": "05",
+      "day": "10",
+      "year": "2025"
+    },
+    "time": "10:00 AM",
+    "duration": {
+      "minutes": 240
+    },
+    "location": "Community Park, Chicago, IL",
+    "type": "Fair",
+    "website": "https://wellnessinitiative.org/fair",
+    "priority": "Low",
+    "description": "A fair promoting health and wellness with various vendors.",
+    "notes": "Free entry for all visitors."
+  },
+  {
+    "eventName": "Global Startup Summit",
+    "organizers": "Startup Hub",
+    "date": {
+      "month": "06",
+      "day": "12",
+      "year": "2025"
+    },
+    "time": "08:00 AM",
+    "duration": {
+      "minutes": 300
+    },
+    "location": "Tech Plaza, Austin, TX",
+    "type": "Summit",
+    "website": "https://globalstartupsummit.com",
+    "priority": "High",
+    "description": "Networking and pitching opportunities for startups worldwide.",
+    "notes": "Keynote speakers will include industry leaders."
+  },
+  {
+    "eventName": "Annual Music Festival",
+    "organizers": "Music Lovers",
+    "date": {
+      "month": "07",
+      "day": "25",
+      "year": "2025"
+    },
+    "time": "02:00 PM",
+    "duration": {
+      "minutes": 480
+    },
+    "location": "Outdoor Arena, Los Angeles, CA",
+    "type": "Festival",
+    "website": "https://musicfestival.com",
+    "priority": "Medium",
+    "description": "A day-long festival featuring various artists and genres.",
+    "notes": "Tickets available online."
+  },
+  {
+    "eventName": "International Book Fair",
+    "organizers": "Literary Association",
+    "date": {
+      "month": "08",
+      "day": "05",
+      "year": "2025"
+    },
+    "time": "09:00 AM",
+    "duration": {
+      "minutes": 240
+    },
+    "location": "Convention Center, London, UK",
+    "type": "Fair",
+    "website": "https://bookfair.com",
+    "priority": "High",
+    "description": "Celebrating literature with authors, readings, and signings.",
+    "notes": "Meet famous authors."
+  },
+  {
+    "eventName": "Tech Talks: AI and the Future",
+    "organizers": "AI Community",
+    "date": {
+      "month": "09",
+      "day": "18",
+      "year": "2025"
+    },
+    "time": "05:00 PM",
+    "duration": {
+      "minutes": 180
+    },
+    "location": "University Auditorium, Boston, MA",
+    "type": "Talk",
+    "website": "https://aitalks.com",
+    "priority": "Medium",
+    "description": "Discussions on AI advancements and their implications.",
+    "notes": "Q&A session will follow."
+  },
+  {
+    "eventName": "Youth Leadership Summit",
+    "organizers": "Youth Empowerment",
+    "date": {
+      "month": "10",
+      "day": "14",
+      "year": "2025"
+    },
+    "time": "08:30 AM",
+    "duration": {
+      "minutes": 360
+    },
+    "location": "Conference Center, Seattle, WA",
+    "type": "Summit",
+    "website": "https://youthleadershipsummit.com",
+    "priority": "High",
+    "description": "Empowering youth leaders with skills and knowledge.",
+    "notes": "Lunch will be provided."
+  },
+  {
+    "eventName": "Annual Sports Day",
+    "organizers": "Local Sports Club",
+    "date": {
+      "month": "11",
+      "day": "05",
+      "year": "2025"
+    },
+    "time": "09:00 AM",
+    "duration": {
+      "minutes": 480
+    },
+    "location": "City Sports Complex, Miami, FL",
+    "type": "Sporting Event",
+    "website": "https://sportsclub.com",
+    "priority": "Low",
+    "description": "A day of sports and activities for all ages.",
+    "notes": "Family-friendly event."
+  },
+  {
+    "eventName": "Sustainable Living Expo",
+    "organizers": "Eco-Friendly Group",
+    "date": {
+      "month": "12",
+      "day": "01",
+      "year": "2025"
+    },
+    "time": "10:00 AM",
+    "duration": {
+      "minutes": 240
+    },
+    "location": "Exhibition Hall, Denver, CO",
+    "type": "Expo",
+    "website": "https://sustainableexpo.com",
+    "priority": "Medium",
+    "description": "Showcasing sustainable products and practices.",
+    "notes": "Workshops available."
+  },
+  {
+    "eventName": "Holiday Charity Gala",
+    "organizers": "Charity Organization",
+    "date": {
+      "month": "12",
+      "day": "15",
+      "year": "2025"
+    },
+    "time": "07:00 PM",
+    "duration": {
+      "minutes": 300
+    },
+    "location": "Grand Ballroom, Las Vegas, NV",
+    "type": "Gala",
+    "website": "https://charitygala.com",
+    "priority": "High",
+    "description": "A gala event to raise funds for local charities.",
+    "notes": "Formal attire required."
+  }
+]

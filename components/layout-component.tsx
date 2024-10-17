@@ -5,9 +5,7 @@ import {
   Search,
   ChevronDown,
   Home,
-  MessageSquare,
-  Users,
-  Briefcase,
+  Network,
   Calendar,
   BookOpen,
   Settings,
@@ -16,9 +14,9 @@ import {
   Sun,
   LogOut,
   ChevronRight,
-  Bell,
   ChevronLeftCircle,
   ChevronRightCircle,
+  ListCheck,
 } from "lucide-react";
 import { GiCosmicEgg } from "react-icons/gi";
 import { Button } from "@/components/ui/button";
@@ -88,7 +86,7 @@ export default function LayoutComponent({
 
     if (page === "Home") {
       setBreadcrumbs(["Home"]);
-    } else if (["Messaging", "Groups", "Forums"].includes(page)) {
+    } else if (["Messaging", "Forums"].includes(page)) {
       setBreadcrumbs(["Home", "Networking", page]);
     } else if (["Job Board", "Internship Board"].includes(page)) {
       setBreadcrumbs(["Home", "Opportunities", page]);
@@ -114,7 +112,7 @@ export default function LayoutComponent({
     return (
       currentPage === page ||
       (openCollapsible === "Networking" &&
-        ["Messaging", "Groups", "Forums"].includes(page)) ||
+        ["Messaging", "Forums"].includes(page)) ||
       (openCollapsible === "Opportunities" &&
         ["Job Board", "Internship Board"].includes(page)) ||
       (openCollapsible === "Resources" &&
@@ -168,17 +166,13 @@ export default function LayoutComponent({
       updatePage("Home");
     } else if (path.startsWith("/networking/messaging")) {
       updatePage("Messaging");
-    } else if (path.startsWith("/networking/groups")) {
-      updatePage("Groups");
     } else if (path.startsWith("/networking/forums")) {
       updatePage("Forums");
-    } else if (path.startsWith("/job-board")) {
-      updatePage("Job Board");
-    } else if (path.startsWith("/internship-board")) {
-      updatePage("Internship Board");
-    } else if (path.startsWith("/career-development")) {
+    } else if (path.startsWith("/opportunities")) {
+      updatePage("Opportunities");
+    } else if (path.startsWith("/resources/career-development")) {
       updatePage("Career Development");
-    } else if (path.startsWith("/mentorship-program")) {
+    } else if (path.startsWith("/resources/mentorship-program")) {
       updatePage("Mentorship Program");
     } else if (path.startsWith("/events")) {
       updatePage("Events");
@@ -222,7 +216,7 @@ export default function LayoutComponent({
               >
                 <CollapsibleTrigger asChild>
                   {renderSidebarItem(
-                    <Users />,
+                    <Network />,
                     "Networking",
                     () => handleCollapsibleChange("Networking"),
                     openCollapsible === "Networking"
@@ -240,17 +234,6 @@ export default function LayoutComponent({
                       }
                     >
                       <span className="font-medium">Messaging</span>
-                    </Button>
-                    <Button
-                      variant={isSelected("Groups") ? "secondary" : "ghost"}
-                      className={`w-full justify-start py-2 ${
-                        isSelected("Groups") ? "bg-primary/0" : ""
-                      }`}
-                      onClick={() =>
-                        handlePageClick("Groups", "/networking/groups")
-                      }
-                    >
-                      <span className="font-medium">Groups</span>
                     </Button>
                     <Button
                       variant={isSelected("Forums") ? "secondary" : "ghost"}
@@ -319,7 +302,7 @@ export default function LayoutComponent({
               </Collapsible>
             </li>
             <li>
-              {renderSidebarItem(<Calendar />, "Opportunities", () =>
+              {renderSidebarItem(<ListCheck />, "Opportunities", () =>
                 handlePageClick("Opportunities", "/opportunities")
               )}
             </li>

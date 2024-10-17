@@ -1,10 +1,10 @@
-import JobBoardComponent from "@/components/opportunities";
+import ProfileComponent from "@/components/profile-content";
 import LayoutComponent from "@/components/layout-component";
 
 export default function Page() {
   return (
-    <LayoutComponent childPage="opportunities">
-      <JobBoardComponent />
+    <LayoutComponent childPage="profile">
+      <ProfileComponent />
     </LayoutComponent>
   );
 }

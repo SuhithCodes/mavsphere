@@ -3,8 +3,8 @@ import LayoutComponent from "@/components/layout-component";
 
 export default function Page() {
   return (
-    <LayoutComponent childPage="networking/messaging">
-      <NetworkingPageComponent childtab="messaging" />
+    <LayoutComponent childPage="networking">
+      <NetworkingPageComponent />
     </LayoutComponent>
   );
 }
