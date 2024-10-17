@@ -36,8 +36,8 @@ export default function SettingsPageComponent() {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? "dark" : ""}`}>
-      <div className="p-6 bg-background text-foreground">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="p-4 bg-background text-foreground">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Profile Information Section */}
           <Card className="lg:col-span-2">
             <CardHeader>
@@ -82,7 +82,7 @@ export default function SettingsPageComponent() {
                     <CardContent className="space-y-2">
                       <div className="space-y-1">
                         <Label htmlFor="name">Name</Label>
-                        <Input id="name" defaultValue="Pedro Duarte" />
+                        <Input id="name" defaultValue="John Doe" />
                       </div>
                       <div className="space-y-1">
                         <Label htmlFor="email">Email</Label>
@@ -94,7 +94,7 @@ export default function SettingsPageComponent() {
                       </div>
                       <div className="space-y-1">
                         <Label htmlFor="username">Username</Label>
-                        <Input id="username" defaultValue="@peduarte" />
+                        <Input id="username" defaultValue="@john.doe" />
                       </div>
                     </CardContent>
                   </Card>
@@ -172,6 +172,18 @@ export default function SettingsPageComponent() {
                       Show LinkedIn Profile
                     </Label>
                     <Switch id="showLinkedIn" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="showGithub" className="text-2xl">
+                      Show GitHub Profile
+                    </Label>
+                    <Switch id="showGithub" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="showKaggle" className="text-2xl">
+                      Show Kaggle Profile
+                    </Label>
+                    <Switch id="showKaggle" />
                   </div>
                 </div>
               </div>

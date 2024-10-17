@@ -3,7 +3,7 @@ import LayoutComponent from "@/components/layout-component";
 
 export default function Page() {
   return (
-    <LayoutComponent childPage="Events">
+    <LayoutComponent childPage="events">
       <EventsPageComponent />
     </LayoutComponent>
   );

@@ -6,10 +6,9 @@ import {
   MessageSquare,
   TrendingUp,
   Plus,
-  Search,
-  Bell,
-  Settings,
+  Send,
   CheckCircle,
+  Paperclip,
   PlusCircle,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,9 +24,16 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function ForumComponent() {
+  const [postContent, setPostContent] = useState("");
   const [selectedForum, setSelectedForum] = useState("General");
+  const username = "JohnDoe";
+  const handlePost = () => {
+    console.log("Posting:", postContent);
+    setPostContent("");
+  };
 
   const subscribedForums = [
     {
@@ -206,6 +212,32 @@ export default function ForumComponent() {
           <h2 className="text-2xl font-semibold mb-4">{selectedForum} Forum</h2>
           <ScrollArea className="h-[calc(100vh-200px)]">
             <div className="space-y-4">
+              <Card className="mb-6">
+                <CardContent className="pt-6">
+                  <div className="flex items-center space-x-4">
+                    <Avatar>
+                      <AvatarImage
+                        src="/placeholder.svg?height=40&width=40"
+                        alt={username}
+                      />
+                      <AvatarFallback>{username.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <Input
+                      placeholder="What's on your mind?"
+                      value={postContent}
+                      onChange={(e) => setPostContent(e.target.value)}
+                      className="flex-grow"
+                    />
+                    <Button onClick={handlePost}>
+                      <Paperclip className="h-4 w-4" />
+                    </Button>
+                    <Button onClick={handlePost}>
+                      <Send className="h-4 w-4 mr-2" />
+                      Post
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
               {posts.map((post, index) => (
                 <Card key={index}>
                   <CardContent className="p-4">

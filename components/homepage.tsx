@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import {
   ThumbsUp,
@@ -10,6 +11,7 @@ import {
   Mail,
   Users,
   Globe,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,8 +27,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function HomePage() {
+export default function Homepage() {
   const [postContent, setPostContent] = useState("");
+  const [selectedProfile, setSelectedProfile] = useState(null);
   const username = "JohnDoe";
 
   const handlePost = () => {
@@ -85,16 +88,22 @@ export default function HomePage() {
       name: "Alex Turner",
       title: "Software Engineer",
       avatar: "/placeholder.svg?height=40&width=40",
+      followers: 500,
+      following: 300,
     },
     {
       name: "Sophia Lee",
       title: "UX Designer",
       avatar: "/placeholder.svg?height=40&width=40",
+      followers: 750,
+      following: 420,
     },
     {
       name: "David Chen",
       title: "Data Scientist",
       avatar: "/placeholder.svg?height=40&width=40",
+      followers: 600,
+      following: 350,
     },
   ];
 
@@ -131,14 +140,17 @@ export default function HomePage() {
     },
   ];
 
+  const handleProfileClick = (profile) => {
+    setSelectedProfile(profile);
+  };
+
+  const closeProfileCard = () => {
+    setSelectedProfile(null);
+  };
+
   return (
-    <div className="min-h-screen p-6 flex overflow-hidden">
-      {" "}
-      {/* Set min-height and enable overflow */}
+    <div className="min-h-screen p-6 flex overflow-hidden relative">
       <div className="flex-grow max-w-3xl mx-auto flex flex-col">
-        {" "}
-        {/* Center the main content */}
-        {/* What's on your mind? */}
         <Card className="mb-6">
           <CardContent className="pt-6">
             <div className="flex items-center space-x-4">
@@ -162,7 +174,6 @@ export default function HomePage() {
             </div>
           </CardContent>
         </Card>
-        {/* Recent Activities */}
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-lg font-semibold">Recent Activities</h3>
@@ -180,10 +191,7 @@ export default function HomePage() {
           </div>
           <Separator className="my-4" />
         </div>
-        {/* Main content with sample posts */}
         <div className="space-y-6">
-          {" "}
-          {/* Removed scroll effect */}
           {samplePosts.map((post) => (
             <Card key={post.id}>
               <CardContent className="pt-6">
@@ -194,7 +202,20 @@ export default function HomePage() {
                   </Avatar>
                   <div className="flex-grow">
                     <div className="flex justify-between items-center mb-2">
-                      <h4 className="font-semibold">{post.author}</h4>
+                      <h4
+                        className="font-semibold cursor-pointer hover:underline"
+                        onClick={() =>
+                          handleProfileClick({
+                            name: post.author,
+                            avatar: post.avatar,
+                            title: "User",
+                            followers: 0,
+                            following: 0,
+                          })
+                        }
+                      >
+                        {post.author}
+                      </h4>
                       <span className="text-sm text-gray-500">{post.time}</span>
                     </div>
                     <p className="mb-2">{post.content}</p>
@@ -229,11 +250,7 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-      {/* Right sidebar */}
       <div className="sticky top-0 w-80 flex-shrink-0">
-        {" "}
-        {/* Prevent sidebar from shrinking */}
-        {/* Notifications */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>Notifications</CardTitle>
@@ -259,7 +276,6 @@ export default function HomePage() {
             </ul>
           </CardContent>
         </Card>
-        {/* Featured Profiles */}
         <Card>
           <CardHeader>
             <CardTitle>Featured Profiles</CardTitle>
@@ -268,17 +284,26 @@ export default function HomePage() {
             <ul className="space-y-4">
               {featuredProfiles.map((profile, index) => (
                 <li key={index} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
+                  <div
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={() => handleProfileClick(profile)}
+                  >
                     <Avatar>
                       <AvatarImage src={profile.avatar} alt={profile.name} />
                       <AvatarFallback>{profile.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold">{profile.name}</p>
+                      <p className="font-semibold hover:underline">
+                        {profile.name}
+                      </p>
                       <p className="text-sm text-gray-500">{profile.title}</p>
                     </div>
                   </div>
-                  <Button variant="ghost" size="icon">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleProfileClick(profile)}
+                  >
                     <UserPlus className="h-4 w-4" />
                   </Button>
                 </li>
@@ -287,6 +312,52 @@ export default function HomePage() {
           </CardContent>
         </Card>
       </div>
+      {selectedProfile && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg w-64 relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-2 right-2"
+              onClick={closeProfileCard}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            <div className="h-24 bg-blue-600 rounded-t-lg" />
+            <img
+              src={selectedProfile.avatar}
+              height="100"
+              width="100"
+              className="rounded-full -mt-12 border-4 border-white mx-auto"
+              alt="User avatar"
+              style={{ aspectRatio: "100/100", objectFit: "cover" }}
+            />
+            <div className="text-center mt-2">
+              <h2 className="text-lg font-semibold">{selectedProfile.name}</h2>
+              <p className="text-gray-500">{selectedProfile.title}</p>
+            </div>
+            <div className="flex justify-around my-4">
+              <div className="text-center">
+                <h3 className="font-semibold text-lg">
+                  {selectedProfile.followers}
+                </h3>
+                <p className="text-gray-500">Followers</p>
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold text-lg">
+                  {selectedProfile.following}
+                </h3>
+                <p className="text-gray-500">Following</p>
+              </div>
+            </div>
+            <div className="px-6 py-4">
+              <Button className="w-full bg-blue-600 text-white rounded-lg">
+                Follow
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

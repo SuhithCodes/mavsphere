@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import {
   ChevronLeft,
@@ -10,13 +9,13 @@ import {
   X,
   Check,
   Globe,
-  ChevronDownIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import DialogCardsComponent from "@/components/dialog-cards";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -26,14 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -42,15 +33,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 // Helper function to generate dates for the current week
 const getWeekDates = (date: Date) => {
@@ -92,6 +74,9 @@ const initialEvents = [
     location: "Conference Room A",
     type: "meeting",
     website: "https://meet.google.com/abc-defg-hij",
+    description: "Weekly team sync-up",
+    notes: "Prepare project updates",
+    organizer: "John Doe",
   },
   {
     id: 2,
@@ -100,6 +85,9 @@ const initialEvents = [
     duration: 0,
     location: "Online",
     type: "deadline",
+    description: "Final submission for Project X",
+    notes: "Ensure all documentation is complete",
+    organizer: "Project Manager",
   },
   {
     id: 3,
@@ -108,6 +96,9 @@ const initialEvents = [
     duration: 90,
     location: "Cafe Nero",
     type: "meeting",
+    description: "Career guidance session",
+    notes: "Bring your career goals document",
+    organizer: "Jane Smith",
   },
   {
     id: 4,
@@ -117,6 +108,9 @@ const initialEvents = [
     location: "Auditorium",
     type: "seminar",
     website: "https://aiethics.workshop.com",
+    description: "Exploring ethical considerations in AI development",
+    notes: "Open to all departments",
+    organizer: "AI Ethics Committee",
   },
   {
     id: 5,
@@ -126,6 +120,9 @@ const initialEvents = [
     location: "Online",
     type: "meeting",
     website: "https://zoom.us/j/123456789",
+    description: "Review pull requests for feature X",
+    notes: "Prepare your code explanations",
+    organizer: "Lead Developer",
   },
   {
     id: 6,
@@ -134,15 +131,21 @@ const initialEvents = [
     duration: 60,
     location: "Gym",
     type: "workout",
+    description: "Group fitness session",
+    notes: "Bring water and towel",
+    organizer: "Fitness Instructor",
   },
   {
     id: 7,
     title: "AI and Machine Learning Conference",
     date: new Date(2024, 10, 15, 9, 0),
     duration: 480,
-    location: "Tech Center",
+    location: "University of Texas at Arlington, TX",
     type: "conference",
     website: "https://aimlconf2024.com",
+    description: "Annual conference on AI and ML advancements",
+    notes: "Keynote speakers from leading tech companies",
+    organizer: "Tech Events Inc.",
   },
   {
     id: 8,
@@ -152,6 +155,9 @@ const initialEvents = [
     location: "Security Hub",
     type: "conference",
     website: "https://cybersummit2024.com",
+    description: "Latest trends and threats in cybersecurity",
+    notes: "Hands-on workshops available",
+    organizer: "Cyber Defense Association",
   },
   {
     id: 9,
@@ -161,16 +167,17 @@ const initialEvents = [
     location: "Dev Center",
     type: "conference",
     website: "https://webdevfuture2024.com",
+    description: "Exploring upcoming web technologies",
+    notes: "Networking session in the evening",
+    organizer: "WebDev Pioneers",
   },
 ];
 
-export default function EventsPageComponent() {
-  const [isContactFormOpen, setIsContactFormOpen] = useState(false);
+export default function EventsPage() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [events, setEvents] = useState(initialEvents);
-  const [eventFilters, setEventFilters] = useState(["all"]);
   const [newEvent, setNewEvent] = useState({
     title: "",
     date: "",
@@ -181,9 +188,8 @@ export default function EventsPageComponent() {
     description: "",
     website: "",
     notes: "",
-    priority: "medium",
+    organizer: "",
   });
-  const [newFilter, setNewFilter] = useState("");
 
   const weekDates = getWeekDates(currentDate);
   const monthDates = getMonthDates(
@@ -220,12 +226,23 @@ export default function EventsPageComponent() {
     setCurrentDate(newDate);
   };
 
+  const hasEvents = (date: Date | null) => {
+    return (
+      date &&
+      events.some(
+        (event) =>
+          event.date.getDate() === date.getDate() &&
+          event.date.getMonth() === date.getMonth() &&
+          event.date.getFullYear() === date.getFullYear()
+      )
+    );
+  };
+
   const filteredEvents = events.filter(
     (event) =>
       event.date.getDate() === selectedDate.getDate() &&
       event.date.getMonth() === selectedDate.getMonth() &&
-      event.date.getFullYear() === selectedDate.getFullYear() &&
-      (eventFilters.includes("all") || eventFilters.includes(event.type))
+      event.date.getFullYear() === selectedDate.getFullYear()
   );
 
   const upcomingConferences = events
@@ -234,6 +251,7 @@ export default function EventsPageComponent() {
     .slice(0, 3)
     .map((conference) => ({
       ...conference,
+      description: `Join us for the ${conference.title}, a premier event in the field.`,
     }));
 
   const handleAddEvent = () => {
@@ -248,7 +266,7 @@ export default function EventsPageComponent() {
       description: newEvent.description,
       website: newEvent.website,
       notes: newEvent.notes,
-      priority: newEvent.priority,
+      organizer: newEvent.organizer,
     };
     setEvents([...events, newEventObject]);
     setNewEvent({
@@ -261,7 +279,7 @@ export default function EventsPageComponent() {
       description: "",
       website: "",
       notes: "",
-      priority: "medium",
+      organizer: "",
     });
   };
 
@@ -295,216 +313,194 @@ export default function EventsPageComponent() {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-              <div className="flex items-center space-x-2">
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="outline" size="icon">
-                      <Plus className="h-4 w-4" />
-                      <span className="sr-only">Add event</span>
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle>Add New Event</SheetTitle>
-                      <SheetDescription>
-                        Fill in the details for the new event.
-                      </SheetDescription>
-                    </SheetHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="title" className="text-right">
-                          Title
-                        </Label>
-                        <Input
-                          id="title"
-                          value={newEvent.title}
-                          onChange={(e) =>
-                            setNewEvent({ ...newEvent, title: e.target.value })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="date" className="text-right">
-                          Date
-                        </Label>
-                        <Input
-                          id="date"
-                          type="date"
-                          value={newEvent.date}
-                          onChange={(e) =>
-                            setNewEvent({ ...newEvent, date: e.target.value })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="time" className="text-right">
-                          Time
-                        </Label>
-                        <Input
-                          id="time"
-                          type="time"
-                          value={newEvent.time}
-                          onChange={(e) =>
-                            setNewEvent({ ...newEvent, time: e.target.value })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="duration" className="text-right">
-                          Duration (minutes)
-                        </Label>
-                        <Input
-                          id="duration"
-                          type="number"
-                          value={newEvent.duration}
-                          onChange={(e) =>
-                            setNewEvent({
-                              ...newEvent,
-                              duration: e.target.value,
-                            })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="location" className="text-right">
-                          Location
-                        </Label>
-                        <Input
-                          id="location"
-                          value={newEvent.location}
-                          onChange={(e) =>
-                            setNewEvent({
-                              ...newEvent,
-                              location: e.target.value,
-                            })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="type" className="text-right">
-                          Type
-                        </Label>
-                        <Select
-                          onValueChange={(value) =>
-                            setNewEvent({ ...newEvent, type: value })
-                          }
-                        >
-                          <SelectTrigger className="col-span-3">
-                            <SelectValue placeholder="Select event type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="workout">Workout</SelectItem>
-                            <SelectItem value="meeting">Meeting</SelectItem>
-                            <SelectItem value="seminar">Seminar</SelectItem>
-                            <SelectItem value="deadline">Deadline</SelectItem>
-                            <SelectItem value="conference">
-                              Conference
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="website" className="text-right">
-                          Website
-                        </Label>
-
-                        <Input
-                          id="website"
-                          type="url"
-                          value={newEvent.website}
-                          onChange={(e) =>
-                            setNewEvent({
-                              ...newEvent,
-                              website: e.target.value,
-                            })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="priority" className="text-right">
-                          Priority
-                        </Label>
-                        <Select
-                          onValueChange={(value) =>
-                            setNewEvent({ ...newEvent, priority: value })
-                          }
-                        >
-                          <SelectTrigger className="col-span-3">
-                            <SelectValue placeholder="Select priority" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="low">Low</SelectItem>
-                            <SelectItem value="medium">Medium</SelectItem>
-                            <SelectItem value="high">High</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="description" className="text-right">
-                          Description
-                        </Label>
-                        <Textarea
-                          id="description"
-                          value={newEvent.description}
-                          onChange={(e) =>
-                            setNewEvent({
-                              ...newEvent,
-                              description: e.target.value,
-                            })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="notes" className="text-right">
-                          Notes
-                        </Label>
-                        <Textarea
-                          id="notes"
-                          value={newEvent.notes}
-                          onChange={(e) =>
-                            setNewEvent({ ...newEvent, notes: e.target.value })
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Event
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Add New Event</SheetTitle>
+                    <SheetDescription>
+                      Fill in the details for the new event.
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="title" className="text-right">
+                        Event Name
+                      </Label>
+                      <Input
+                        id="title"
+                        value={newEvent.title}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, title: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
+                      <Label htmlFor="Organizer" className="text-right">
+                        Organizer
+                      </Label>
+                      <Input
+                        id="organizer"
+                        value={newEvent.organizer}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, title: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
                     </div>
-                    <div className="flex justify-end mt-4">
-                      <Button
-                        variant="outline"
-                        onClick={() =>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="date" className="text-right">
+                        Date
+                      </Label>
+                      <Input
+                        id="date"
+                        type="date"
+                        value={newEvent.date}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, date: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="time" className="text-right">
+                        Time
+                      </Label>
+                      <Input
+                        id="time"
+                        type="time"
+                        value={newEvent.time}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, time: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="duration" className="text-right">
+                        Duration (minutes)
+                      </Label>
+                      <Input
+                        id="duration"
+                        type="number"
+                        value={newEvent.duration}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, duration: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="location" className="text-right">
+                        Location
+                      </Label>
+                      <Input
+                        id="location"
+                        value={newEvent.location}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, location: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="type" className="text-right">
+                        Type
+                      </Label>
+                      <Select
+                        onValueChange={(value) =>
+                          setNewEvent({ ...newEvent, type: value })
+                        }
+                      >
+                        <SelectTrigger className="col-span-3">
+                          <SelectValue placeholder="Select event type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="workshop">Workshop</SelectItem>
+                          <SelectItem value="meeting">Meeting</SelectItem>
+                          <SelectItem value="seminar">Seminar</SelectItem>
+                          <SelectItem value="deadline">Deadline</SelectItem>
+                          <SelectItem value="conference">Conference</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="website" className="text-right">
+                        Website
+                      </Label>
+                      <Input
+                        id="website"
+                        type="url"
+                        value={newEvent.website}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, website: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid  grid-cols-4 items-center gap-4">
+                      <Label htmlFor="description" className="text-right">
+                        Description
+                      </Label>
+                      <Textarea
+                        id="description"
+                        value={newEvent.description}
+                        onChange={(e) =>
                           setNewEvent({
-                            title: "",
-                            date: "",
-                            time: "",
-                            duration: "",
-                            location: "",
-                            type: "",
-                            description: "",
-                            website: "",
-                            notes: "",
-                            priority: "medium",
+                            ...newEvent,
+                            description: e.target.value,
                           })
                         }
-                        className="mr-2"
-                      >
-                        <X className="h-4 w-4 mr-2" />
-                        Cancel
-                      </Button>
-                      <Button onClick={handleAddEvent}>
-                        <Check className="h-4 w-4 mr-2" />
-                        Add Event
-                      </Button>
+                        className="col-span-3"
+                      />
                     </div>
-                  </SheetContent>
-                </Sheet>
-              </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="notes" className="text-right">
+                        Notes
+                      </Label>
+                      <Textarea
+                        id="notes"
+                        value={newEvent.notes}
+                        onChange={(e) =>
+                          setNewEvent({ ...newEvent, notes: e.target.value })
+                        }
+                        className="col-span-3"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end mt-4">
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        setNewEvent({
+                          title: "",
+                          date: "",
+                          time: "",
+                          duration: "",
+                          location: "",
+                          type: "",
+                          description: "",
+                          website: "",
+                          notes: "",
+                          organizer: "",
+                        })
+                      }
+                      className="mr-2"
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Cancel
+                    </Button>
+                    <Button onClick={handleAddEvent}>
+                      <Check className="h-4 w-4 mr-2" />
+                      Add Event
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
 
             <div className="grid grid-cols-7 gap-4">
@@ -543,9 +539,7 @@ export default function EventsPageComponent() {
                     {events
                       .filter(
                         (event) =>
-                          event.date.toDateString() === date.toDateString() &&
-                          (eventFilters.includes("all") ||
-                            eventFilters.includes(event.type))
+                          event.date.toDateString() === date.toDateString()
                       )
                       .map((event) => (
                         <Card
@@ -651,27 +645,13 @@ export default function EventsPageComponent() {
                         </div>
                       )}
                       <Badge>{event.type}</Badge>
-                      {event.priority && (
-                        <Badge
-                          className="ml-2"
-                          variant={
-                            event.priority === "high"
-                              ? "destructive"
-                              : event.priority === "medium"
-                              ? "default"
-                              : "secondary"
-                          }
-                        >
-                          {event.priority}
-                        </Badge>
-                      )}
                       {event.description && (
                         <p
                           className={`mt-2 text-sm ${
                             isDarkMode ? "text-gray-400" : "text-gray-600"
                           }`}
                         >
-                          {event.description}
+                          <strong>Description:</strong> {event.description}
                         </p>
                       )}
                       {event.notes && (
@@ -683,6 +663,12 @@ export default function EventsPageComponent() {
                           <strong>Notes:</strong> {event.notes}
                         </p>
                       )}
+                      <DialogCardsComponent
+                        eventName={event.title}
+                        organizers={[event.organizer]}
+                        address={event.location}
+                        location={event.location}
+                      />
                     </div>
                   ))
                 )}
@@ -726,7 +712,7 @@ export default function EventsPageComponent() {
                       key={index}
                       variant="ghost"
                       size="sm"
-                      className={`p-1 ${
+                      className={`p-1 relative ${
                         date
                           ? date.toDateString() === selectedDate.toDateString()
                             ? isDarkMode
@@ -742,6 +728,9 @@ export default function EventsPageComponent() {
                       onClick={() => date && handleDateClick(date)}
                     >
                       {date ? date.getDate() : ""}
+                      {hasEvents(date) && (
+                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-orange-500 rounded-full" />
+                      )}
                     </Button>
                   ))}
                 </div>
@@ -781,33 +770,12 @@ export default function EventsPageComponent() {
                           })}
                         </td>
                         <td className="py-2 text-right">
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
-                                <ChevronDownIcon className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  navigator.clipboard.writeText(
-                                    conference.title
-                                  )
-                                }
-                              >
-                                Copy Conference Title
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem
-                                onClick={() => setIsContactFormOpen(true)}
-                              >
-                                Contact Us
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>Apply now</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
+                          <Button
+                            size="sm"
+                            onClick={() => handleDateClick(conference.date)}
+                          >
+                            Apply
+                          </Button>
                         </td>
                       </tr>
                     ))}
@@ -818,33 +786,6 @@ export default function EventsPageComponent() {
           </div>
         </div>
       </main>
-
-      <Dialog open={isContactFormOpen} onOpenChange={setIsContactFormOpen}>
-        <DialogContent className={isDarkMode ? "bg-gray-800 text-white" : ""}>
-          <DialogHeader>
-            <DialogTitle>Contact Us</DialogTitle>
-            <DialogDescription className={isDarkMode ? "text-gray-300" : ""}>
-              We'd love to hear from you!
-            </DialogDescription>
-          </DialogHeader>
-          <form>
-            <Input placeholder="Your Name" className="mb-4" />
-            <Input placeholder="Your Email" className="mb-4" />
-            <Input placeholder="Your Phone Number" className="mb-4" />
-            <Input placeholder="Subject" className="mb-4" />
-            <Textarea placeholder="Your Message" rows={4} className="mb-4" />
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsContactFormOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button type="submit">Send</Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
