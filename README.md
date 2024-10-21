@@ -1,7 +1,7 @@
 # MavSphere 🧑‍🎓🌐  
 **The Academic Networking Site**
 
-MavSphere is an innovative web application designed to connect graduate students and academics, fostering collaboration and career development within the academic community. Built with **Next.js 13** using the new app directory structure and **TypeScript**, this platform enables users to explore forums, find job/internship opportunities, participate in academic events, and access mentorship resources.
+MavSphere is an innovative web application designed to connect graduate students and academics, fostering collaboration and career development within the academic community. Built with **React** and **Next.js 13** using the new app directory structure and **TypeScript**, this platform enables users to explore forums, find job/internship opportunities, participate in academic events, and access mentorship resources.
 
 ## 📚 Course Information
 
@@ -27,7 +27,7 @@ Make sure you have the following installed:
 
 Clone the repository:
 ```bash
-git clone https://github.com/your-username/mavsphere.git
+git clone https://github.com/SuhithCodes/mavsphere.git
 ```
 
 Navigate to the project directory:
@@ -67,15 +67,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ```bash
 .
 ├── app/
-│   ├── forums/                  # Forum pages
-│   ├── create-forum/             # Forum creation page
-│   ├── explore/                  # Explore forums section
-│   └── layout.tsx                # App layout
+│   ├── landing/page                  # Landing pages
+│   ├── home/page                     # Home pages
+│   ├── messaging/page                # messaging pages
+│   ├── forums/page                   # Forum pages
+│   ├── career-development/page       # career development pages
+│   ├── mentorship-program/page       # mentorship program pages
+│   ├── opportunities/page            # opportunites pages
+│   ├── events/page                   # evetns page
+│   └── layout/page                    # App layout
 ├── components/                   # Reusable components
-│   ├── ForumCard.tsx             # Forum card component
-│   ├── NavBar.tsx                # Navigation bar component
-│   └── Footer.tsx                # Footer component
-├── pages/                        # Static pages (if any)
 ├── public/                       # Static assets
 ├── styles/                       # Global and component-specific styles
 └── tsconfig.json                 # TypeScript configuration
@@ -86,7 +87,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 You can customize your environment by setting up a `.env.local` file for environment-specific configurations, such as API keys and backend URLs.
 
 ```bash
-NEXT_PUBLIC_API_URL=http://your-api-url
+
+NEXT_PUBLIC_POSITIONSTACK_API_KEY= your-positionstack-url
 ```
 
 ## 📜 Available Scripts
