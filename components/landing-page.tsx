@@ -49,7 +49,7 @@ import {
   DrawerClose,
 } from "@/components/ui/drawer";
 import {
-  Table,
+  Table,ff
   TableBody,
   TableCell,
   TableHead,
@@ -279,41 +279,41 @@ const LandingPage = () => {
 
   const teamMembers = [
     {
-      name: "John Doe",
+      name: "Suhith Ghanathay",
       avatar: "/placeholder.svg",
-      designation: "Full Stack Developer",
+      designation: "Full Stack Developer, Performance Engineer",
       experience: "5 years",
       quote: "Innovation distinguishes between a leader and a follower.",
     },
     {
-      name: "Jane Smith",
+      name: "Riddhi Dhanani",
       avatar: "/placeholder.svg",
-      designation: "UI/UX Designer",
-      experience: "4 years",
+      designation: "UI, Frontend Developer",
+      experience: "1 year",
       quote:
         "Design is not just what it looks like and feels like. Design is how it works.",
     },
     {
-      name: "Mike Johnson",
+      name: "Varun Dhanalakota",
       avatar: "/placeholder.svg",
-      designation: "Data Scientist",
-      experience: "6 years",
+      designation: "Backend Developer",
+      experience: "4 years",
       quote:
-        "Data is the new oil. It's valuable, but if unrefined it cannot really be used.",
+        "With Spring Boot, I don’t configure—I just develop",
     },
     {
-      name: "Emily Brown",
+      name: "Pavan Gogineni",
       avatar: "/placeholder.svg",
-      designation: "Machine Learning Engineer",
-      experience: "3 years",
+      designation: "Springboot Developer",
+      experience: "2 years",
       quote:
-        "Machine learning is the science of getting computers to learn without being explicitly programmed.",
+        "Good backend code is invisible—it just works",
     },
     {
-      name: "Alex Lee",
+      name: "Aliza Gowlani",
       avatar: "/placeholder.svg",
       designation: "Project Manager",
-      experience: "7 years",
+      experience: "0 years",
       quote: "The art of management is to make difficult things easy.",
     },
   ];
