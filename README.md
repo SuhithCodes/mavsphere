@@ -147,9 +147,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📦 Deployment
 
-This project is set up for easy deployment on Vercel. Simply connect your GitHub repository to Vercel, and it will automatically deploy your main branch.
-
-For other hosting platforms, make sure to build the project first:
+This project is set up for easy deployment on Cpanel. Make sure to build the project first:
 
 ```bash
 npm run build
