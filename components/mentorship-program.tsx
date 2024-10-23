@@ -1,29 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Search,
-  ChevronDown,
-  Home,
-  MessageSquare,
-  Users,
-  Briefcase,
-  Calendar,
-  BookOpen,
-  Settings,
-  User,
-  Moon,
-  Sun,
-  LogOut,
-  ChevronRight as ChevronRightIcon,
-  Bell,
-  MessageCircle,
-} from "lucide-react";
+import { ChevronRight as MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -35,45 +17,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import "@/styles/mentorship-program.css";
 
 export default function MentorshipProgramComponent() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isNetworkingOpen, setIsNetworkingOpen] = useState(false);
-  const [isOpportunitiesOpen, setIsOpportunitiesOpen] = useState(false);
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState("Mentorship Program");
-  const [breadcrumbs, setBreadcrumbs] = useState([
-    "Home",
-    "Resources",
-    "Mentorship Program",
-  ]);
-
-  const username = "JohnDoe";
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
-  const updatePage = (page: string) => {
-    setCurrentPage(page);
-    if (page === "Home") {
-      setBreadcrumbs(["Home"]);
-    } else {
-      setBreadcrumbs(["Home", page]);
-    }
-  };
+  const [isDarkMode] = useState(false);
 
   const mentors = [
     {
@@ -228,8 +175,8 @@ export default function MentorshipProgramComponent() {
                   invaluable insights into your field of study.
                 </p>
                 <p className="mb-4">
-                  Whether you're seeking academic advice, career guidance, or
-                  research support, our mentors are here to help you navigate
+                  Whether you&apos;re seeking academic advice, career guidance,
+                  or research support, our mentors are here to help you navigate
                   your academic and professional journey.
                 </p>
                 <Dialog>

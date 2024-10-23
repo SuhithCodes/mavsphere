@@ -1,45 +1,18 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import {
-  Search,
-  MessageSquare,
-  Users,
-  Hash,
-  Bell,
-  Send,
-  Paperclip,
-  PlusCircle,
-} from "lucide-react";
+import React, { useState } from "react";
+import { MessageSquare, Users, Bell, Send, Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEffect } from "react";
+import "@/styles/networking-page.css";
 
 export default function NetworkingPageComponent() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedChat, setSelectedChat] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [networkingTab, setNetworkingTab] = useState("messaging");
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    if (isDarkMode) {
-      document.documentElement.classList.remove("dark");
-    } else {
-      document.documentElement.classList.add("dark");
-    }
-  };
 
   const chats = [
     {

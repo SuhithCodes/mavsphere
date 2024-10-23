@@ -1,7 +1,8 @@
 "use client";
+import "@/styles/settings-page.css";
 import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
-import { Save, Eye, EyeOff, UserRoundPen, BadgeInfo } from "lucide-react";
+import { Save, UserRoundPen, BadgeInfo } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,28 +12,16 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function SettingsPageComponent() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [isDarkMode] = useState(false);
   const username = "John Doe";
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle("dark", isDarkMode);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   return (
     <div className={`min-h-screen ${isDarkMode ? "dark" : ""}`}>
@@ -76,7 +65,7 @@ export default function SettingsPageComponent() {
                       <CardTitle>Account</CardTitle>
                       <CardDescription>
                         Make changes to your account here. Click save when
-                        you're done.
+                        you&apos;re done.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
@@ -104,7 +93,7 @@ export default function SettingsPageComponent() {
                     <CardHeader>
                       <CardTitle>Password</CardTitle>
                       <CardDescription>
-                        Change your password here. After saving, you'll be
+                        Change your password here. After saving, you&apos;ll be
                         logged out.
                       </CardDescription>
                     </CardHeader>

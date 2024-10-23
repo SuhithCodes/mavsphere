@@ -33,6 +33,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import "@/styles/events.css";
 
 // Helper function to generate dates for the current week
 const getWeekDates = (date: Date) => {
@@ -175,8 +176,8 @@ const initialEvents = [
 
 export default function EventsPage() {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [isDarkMode] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [events, setEvents] = useState(initialEvents);
   const [newEvent, setNewEvent] = useState({
     title: "",
@@ -284,13 +285,8 @@ export default function EventsPage() {
   };
 
   return (
-    <div
-      className={`flex h-screen ${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
-      }`}
-    >
-      {/* Main Content */}
-      <main className="flex-1 overflow-auto p-6">
+    <div className={`flex h-screen ${isDarkMode ? "dark" : ""}`}>
+      <main className="flex-1 overflow-auto p-6 bg-white dark:bg-gray-900 text-black dark:text-white">
         <div className="flex flex-col lg:flex-row">
           <div className="flex-1 pr-0 lg:pr-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
@@ -508,25 +504,17 @@ export default function EventsPage() {
                 <Button
                   key={index}
                   variant="ghost"
-                  className={`flex flex-col items-stretch h-full p-0 ${
-                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
-                  } ${
+                  className={`flex flex-col items-stretch h-full p-0 hover:bg-gray-100 dark:hover:bg-gray-700 ${
                     date.toDateString() === selectedDate.toDateString()
-                      ? isDarkMode
-                        ? "bg-blue-900"
-                        : "bg-blue-100"
-                      : isDarkMode
-                      ? "bg-gray-800"
-                      : "bg-white"
+                      ? "bg-blue-100 dark:bg-blue-900"
+                      : "bg-white dark:bg-gray-800"
                   }`}
                   onClick={() => handleDateClick(date)}
                 >
                   <div
                     className={`p-2 text-center ${
                       date.toDateString() === new Date().toDateString()
-                        ? isDarkMode
-                          ? "bg-gray-700"
-                          : "bg-gray-200"
+                        ? "bg-gray-200 dark:bg-gray-700"
                         : ""
                     }`}
                   >
@@ -544,17 +532,13 @@ export default function EventsPage() {
                       .map((event) => (
                         <Card
                           key={event.id}
-                          className={`mb-2 ${isDarkMode ? "bg-gray-700" : ""}`}
+                          className="mb-2 bg-white dark:bg-gray-700"
                         >
                           <CardContent className="p-2">
                             <div className="text-sm font-semibold truncate">
                               {event.title}
                             </div>
-                            <div
-                              className={`text-xs ${
-                                isDarkMode ? "text-gray-400" : "text-gray-500"
-                              }`}
-                            >
+                            <div className="text-xs text-gray-500 dark:text-gray-400">
                               {event.date.toLocaleTimeString("en-US", {
                                 hour: "numeric",
                                 minute: "2-digit",
@@ -569,11 +553,7 @@ export default function EventsPage() {
             </div>
 
             {/* Event Details */}
-            <Card
-              className={`mt-6 ${
-                isDarkMode ? "bg-gray-800 border-gray-700" : ""
-              }`}
-            >
+            <Card className="mt-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="text-lg">
                   Events on{" "}
@@ -587,25 +567,19 @@ export default function EventsPage() {
               </CardHeader>
               <CardContent>
                 {filteredEvents.length === 0 ? (
-                  <p className={isDarkMode ? "text-gray-400" : "text-gray-500"}>
+                  <p className="text-gray-500 dark:text-gray-400">
                     No events scheduled for this day.
                   </p>
                 ) : (
                   filteredEvents.map((event) => (
                     <div
                       key={event.id}
-                      className={`mb-4 p-4 border rounded-lg ${
-                        isDarkMode ? "border-gray-700" : ""
-                      }`}
+                      className="mb-4 p-4 border rounded-lg border-gray-200 dark:border-gray-700"
                     >
                       <h3 className="text-lg font-semibold mb-2">
                         {event.title}
                       </h3>
-                      <div
-                        className={`flex items-center text-sm ${
-                          isDarkMode ? "text-gray-400" : "text-gray-500"
-                        } mb-2`}
-                      >
+                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
                         <Clock className="mr-2 h-4 w-4" />
                         {event.date.toLocaleTimeString("en-US", {
                           hour: "numeric",
@@ -619,20 +593,12 @@ export default function EventsPage() {
                             minute: "2-digit",
                           })}`}
                       </div>
-                      <div
-                        className={`flex items-center text-sm ${
-                          isDarkMode ? "text-gray-400" : "text-gray-500"
-                        } mb-2`}
-                      >
+                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
                         <MapPin className="mr-2 h-4 w-4" />
                         {event.location}
                       </div>
                       {event.website && (
-                        <div
-                          className={`flex items-center text-sm ${
-                            isDarkMode ? "text-gray-400" : "text-gray-500"
-                          } mb-2`}
-                        >
+                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
                           <Globe className="mr-2 h-4 w-4" />
                           <a
                             href={event.website}
@@ -646,20 +612,12 @@ export default function EventsPage() {
                       )}
                       <Badge>{event.type}</Badge>
                       {event.description && (
-                        <p
-                          className={`mt-2 text-sm ${
-                            isDarkMode ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                           <strong>Description:</strong> {event.description}
                         </p>
                       )}
                       {event.notes && (
-                        <p
-                          className={`mt-2 text-sm ${
-                            isDarkMode ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                           <strong>Notes:</strong> {event.notes}
                         </p>
                       )}
@@ -677,13 +635,9 @@ export default function EventsPage() {
           </div>
 
           {/* Right Sidebar */}
-          <div
-            className={`w-full lg:w-96 mt-6 lg:mt-0 ${
-              isDarkMode ? "bg-gray-800" : "bg-gray-100"
-            } p-6 rounded-lg`}
-          >
+          <div className="w-full lg:w-96 mt-6 lg:mt-0 bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
             {/* Mini Calendar */}
-            <Card className={`mb-6 ${isDarkMode ? "bg-gray-700" : "bg-white"}`}>
+            <Card className="mb-6 bg-white dark:bg-gray-700">
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <Button variant="ghost" size="sm" onClick={handlePrevMonth}>
@@ -715,13 +669,9 @@ export default function EventsPage() {
                       className={`p-1 relative ${
                         date
                           ? date.toDateString() === selectedDate.toDateString()
-                            ? isDarkMode
-                              ? "bg-blue-600 text-white"
-                              : "bg-blue-100 text-blue-600"
+                            ? "bg-blue-600 text-white dark:bg-blue-500"
                             : date.toDateString() === new Date().toDateString()
-                            ? isDarkMode
-                              ? "bg-gray-600 text-blue-400"
-                              : "bg-gray-200 text-blue-600"
+                            ? "bg-gray-200 text-blue-600 dark:bg-gray-600 dark:text-blue-400"
                             : ""
                           : "invisible"
                       }`}
@@ -738,14 +688,14 @@ export default function EventsPage() {
             </Card>
 
             {/* Upcoming Conferences */}
-            <Card className={`${isDarkMode ? "bg-gray-700" : "bg-white"}`}>
+            <Card className="bg-white dark:bg-gray-700">
               <CardHeader>
                 <CardTitle className="text-lg">Upcoming Conferences</CardTitle>
               </CardHeader>
               <CardContent>
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b">
+                    <tr className="border-b dark:border-gray-600">
                       <th className="text-left pb-2">Conference</th>
                       <th className="text-left pb-2">Date</th>
                       <th className="text-right pb-2">Action</th>
@@ -755,7 +705,7 @@ export default function EventsPage() {
                     {upcomingConferences.map((conference) => (
                       <tr
                         key={conference.id}
-                        className="border-b last:border-b-0"
+                        className="border-b dark:border-gray-600 last:border-b-0"
                       >
                         <td className="py-2">
                           <div className="font-semibold">

@@ -1,12 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState } from "react";
-import {
-  ChevronsUpDownIcon,
-  ChevronDownIcon,
-  CheckIcon,
-  Plus,
-  FilterIcon,
-} from "lucide-react";
+import { ChevronsUpDownIcon, ChevronDownIcon, Plus } from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -58,6 +53,8 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+
+import "@/styles/opportunities.css";
 
 type JobListing = {
   id: string;
@@ -133,10 +130,7 @@ const columns: ColumnDef<JobListing>[] = [
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
+        checked={table.getIsAllPageRowsSelected()} // Must be true or false
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />

@@ -1,16 +1,13 @@
 "use client";
-
 import React, { useState } from "react";
 import {
   Moon,
   X,
   Sun,
-  MessageSquare,
   Users,
   Briefcase,
   BookOpen,
   Calendar,
-  ChevronRight,
 } from "lucide-react";
 import {
   FaFacebook,
@@ -20,7 +17,6 @@ import {
   FaLinkedin,
 } from "react-icons/fa6";
 import { GiCosmicEgg } from "react-icons/gi";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -45,21 +41,17 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
   DrawerClose,
 } from "@/components/ui/drawer";
 import {
-  Table,ff
+  Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -67,148 +59,21 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-
-type LoginSignupProps = {
-  isVisible: boolean;
-  onClose: () => void;
-  isDarkMode: boolean;
-};
-
-const LoginSignup: React.FC<LoginSignupProps> = ({
-  isVisible,
-  onClose,
-  isDarkMode,
-}) => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState(""); // State to store email
-  const [password, setPassword] = useState(""); // State to store password
-  const router = useRouter(); // Create a router instance
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-
-    // Authentication logic
-    if (email === "john.doe@example.com" && password === "qwerty123") {
-      // Navigate to the home page if authentication is successful
-      router.push("/home");
-    } else {
-      // Optionally, you can handle authentication failure here
-      alert("Invalid email or password"); // Alert user about failed login
-    }
-  };
-
-  return (
-    <div
-      className={`fixed inset-0 bg-black bg-opacity-50 flex justify-end transition-opacity duration-300 ${
-        isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
-      }`}
-    >
-      <div
-        className={`w-full max-w-md ${
-          isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
-        } h-full overflow-y-auto transition-transform duration-300 ${
-          isVisible ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-8 flex flex-col h-full">
-          <button onClick={onClose} className="self-end mb-4">
-            Close
-          </button>
-          <h1 className="text-3xl font-bold mb-6">
-            {isLogin ? "Welcome Back to MavSphere" : "Join MavSphere"}
-          </h1>
-          <form onSubmit={handleSubmit} className="space-y-4 flex-grow">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                placeholder="Enter your email"
-                type="email"
-                value={email} // Bind value to state
-                onChange={(e) => setEmail(e.target.value)} // Update state on change
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                placeholder="Enter your password"
-                type="password"
-                value={password} // Bind value to state
-                onChange={(e) => setPassword(e.target.value)} // Update state on change
-                required
-              />
-            </div>
-            {!isLogin && (
-              <>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <Input
-                    id="confirmPassword"
-                    placeholder="Confirm your password"
-                    type="password"
-                    required
-                  />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="signupAsMentor" />
-                  <Label htmlFor="signupAsMentor" className="text-sm">
-                    Sign up as a mentor (optional)
-                  </Label>
-                </div>
-              </>
-            )}
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" />
-              <Label htmlFor="terms" className="text-sm">
-                {isLogin ? "By logging in, you accept the " : "I agree to the "}
-                <Link href="/terms" className="underline">
-                  terms and conditions
-                </Link>
-              </Label>
-            </div>
-            <Button
-              className={`w-full ${
-                isDarkMode
-                  ? "bg-blue-600 hover:bg-blue-700 text-white"
-                  : "bg-primary hover:bg-primary/90"
-              }`}
-              type="submit"
-            >
-              {isLogin ? "Login Now" : "Sign Up"}
-            </Button>
-          </form>
-          <div className="mt-6 text-center text-sm">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <Button
-              variant="link"
-              className={`p-0 ${
-                isDarkMode
-                  ? "text-blue-400 hover:text-blue-300"
-                  : "text-primary hover:text-primary/90"
-              }`}
-              onClick={() => setIsLogin(!isLogin)}
-            >
-              {isLogin ? "Sign up" : "Login"}
-            </Button>
-          </div>
-          {isLogin && (
-            <div className="mt-4 text-center">
-              <Button variant="link" className="text-sm">
-                Forgot password?
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import LoginSignup from "./login-signup";
+import "../styles/landing-page.css";
 
 const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -282,13 +147,15 @@ const LandingPage = () => {
       name: "Suhith Ghanathay",
       avatar: "/placeholder.svg",
       designation: "Full Stack Developer, Performance Engineer",
-      experience: "5 years",
+      github: "https://github.com/suhithCodes",
+      experience: "4 years",
       quote: "Innovation distinguishes between a leader and a follower.",
     },
     {
       name: "Riddhi Dhanani",
       avatar: "/placeholder.svg",
       designation: "UI, Frontend Developer",
+      github: "https://github.com/riddhidhanani",
       experience: "1 year",
       quote:
         "Design is not just what it looks like and feels like. Design is how it works.",
@@ -297,22 +164,23 @@ const LandingPage = () => {
       name: "Varun Dhanalakota",
       avatar: "/placeholder.svg",
       designation: "Backend Developer",
+      github: "https://github.com/johndoe",
       experience: "4 years",
-      quote:
-        "With Spring Boot, I don’t configure—I just develop",
+      quote: "With Spring Boot, I don’t configure—I just develop",
     },
     {
       name: "Pavan Gogineni",
       avatar: "/placeholder.svg",
       designation: "Springboot Developer",
+      github: "https://github.com/johndoe",
       experience: "2 years",
-      quote:
-        "Good backend code is invisible—it just works",
+      quote: "Good backend code is invisible—it just works",
     },
     {
       name: "Aliza Gowlani",
       avatar: "/placeholder.svg",
       designation: "Project Manager",
+      github: "https://github.com/johndoe",
       experience: "0 years",
       quote: "The art of management is to make difficult things easy.",
     },
@@ -344,7 +212,7 @@ const LandingPage = () => {
     {
       name: "AI and Machine Learning Symposium",
       date: "May 15-17, 2024",
-      location: "Virtual",
+      location: "UTA, TX",
     },
     {
       name: "Web Development Conference",
@@ -691,6 +559,7 @@ const LandingPage = () => {
                       <TableHead>Event</TableHead>
                       <TableHead>Date</TableHead>
                       <TableHead>Location</TableHead>
+                      <TableHead>Call for Papers</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -699,6 +568,30 @@ const LandingPage = () => {
                         <TableCell>{event.name}</TableCell>
                         <TableCell>{event.date}</TableCell>
                         <TableCell>{event.location}</TableCell>
+                        <TableCell>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="outline">CTF</Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Submit your research papers for the upcoming
+                                  &quot;{event.name}&quot;.
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  The deadline for submissions is &quot;
+                                  {event.date}&quot;. Visit the conference
+                                  website for more details and guidelines on
+                                  paper submission. Login to know more
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -813,7 +706,7 @@ const LandingPage = () => {
           <DialogHeader>
             <DialogTitle>Contact Us</DialogTitle>
             <DialogDescription className={isDarkMode ? "text-gray-300" : ""}>
-              We'd love to hear from you!
+              We&apos;d love to hear from you!
             </DialogDescription>
           </DialogHeader>
           <form>
@@ -908,7 +801,7 @@ const LandingPage = () => {
                             {member.designation} • {member.experience}
                           </p>
                           <p className="text-base font-semibold text-center italic mb-4">
-                            "{member.quote}"
+                            &quot;{member.quote}&quot;
                           </p>
                           <div className="flex space-x-4">
                             <a
@@ -918,22 +811,6 @@ const LandingPage = () => {
                               className="text-gray-400 hover:text-primary transition-colors"
                             >
                               <FaGithub className="h-6 w-6" />
-                            </a>
-                            <a
-                              href={member.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary transition-colors"
-                            >
-                              <FaLinkedin className="h-6 w-6" />
-                            </a>
-                            <a
-                              href={member.twitter}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary transition-colors"
-                            >
-                              <FaSquareXTwitter className="h-6 w-6" />
                             </a>
                           </div>
                         </div>

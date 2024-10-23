@@ -37,11 +37,10 @@ import {
 } from "@/components/ui/collapsible";
 import {
   Tooltip,
-  TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 interface LayoutComponentProps {
   children: React.ReactNode;
@@ -57,6 +56,7 @@ export default function LayoutComponent({
   const [currentPage, setCurrentPage] = useState(childPage || "Home");
   const [breadcrumbs, setBreadcrumbs] = useState(["Home"]);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
   const username = "John Doe";
 
@@ -179,7 +179,7 @@ export default function LayoutComponent({
     } else if (path.startsWith("/settings")) {
       updatePage("Settings");
     }
-  }, [router.asPath]);
+  }, [pathname]);
 
   return (
     <div className={`flex h-screen bg-background text-foreground`}>
