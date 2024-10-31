@@ -1,0 +1,26 @@
+[
+  {
+    "name": "AI and Machine Learning Symposium",
+    "date": "May 15-17, 2024",
+    "location": "UTA, TX",
+    "type": "conference"
+  },
+  {
+    "name": "Web Development Conference",
+    "date": "June 22-24, 2024",
+    "location": "Austin, TX",
+    "type": "conference"
+  },
+  {
+    "name": "Cybersecurity Summit",
+    "date": "July 10-12, 2024",
+    "location": "Dallas, TX",
+    "type": "conference"
+  },
+  {
+    "name": "Data Science Workshop",
+    "date": "August 5-7, 2024",
+    "location": "Houston, TX",
+    "type": "workshop"
+  }
+]

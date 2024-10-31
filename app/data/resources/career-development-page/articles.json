@@ -1,0 +1,22 @@
+[
+  {
+    "title": "The Future of AI in Software Development",
+    "description": "Explore how artificial intelligence is reshaping the landscape of software development and what it means for developers.",
+    "badges": ["AI", "Software Development", "Future Tech"]
+  },
+  {
+    "title": "Mastering React Hooks",
+    "description": "A comprehensive guide to using React Hooks effectively in your projects.",
+    "badges": ["React", "Frontend", "Web Development"]
+  },
+  {
+    "title": "DevOps Best Practices for 2023",
+    "description": "Learn the latest DevOps strategies to improve your development workflow and deployment processes.",
+    "badges": ["DevOps", "CI/CD", "Automation"]
+  },
+  {
+    "title": "Introduction to Quantum Computing",
+    "description": "Dive into the basics of quantum computing and its potential impact on the tech industry.",
+    "badges": ["Quantum Computing", "Future Tech", "Computer Science"]
+  }
+]

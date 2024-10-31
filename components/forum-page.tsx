@@ -25,7 +25,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import "@/styles/forum-page.css";
 
 export default function ForumComponent() {
   const [postContent, setPostContent] = useState("");

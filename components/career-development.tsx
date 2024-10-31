@@ -13,126 +13,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "@/styles/career-development.css";
+import skillBasedRoadmaps from "@/app/data/resources/career-development-page/roadmaps/skillbasedroadmaps.json";
+import roleBasedRoadmaps from "@/app/data/resources/career-development-page/roadmaps/rolebasedroadmaps.json";
+import articles from "@/app/data/resources/career-development-page/articles.json";
 
 export default function CareerDevelopmentComponent() {
   const [selectedTipTopic, setSelectedTipTopic] = useState(null);
-
-  const skillBasedRoadmaps = [
-    {
-      title: "Software Engineering",
-      description: "Master the art of coding and system design",
-    },
-    {
-      title: "Data Science",
-      description: "Learn to analyze and interpret complex data",
-    },
-    {
-      title: "Digital Marketing",
-      description: "Develop skills in online promotion and analytics",
-    },
-    {
-      title: "UX/UI Design",
-      description: "Create intuitive and beautiful user interfaces",
-    },
-    {
-      title: "Cloud Computing",
-      description: "Build and manage scalable cloud infrastructure",
-    },
-    {
-      title: "Cybersecurity",
-      description: "Protect systems and networks from digital attacks",
-    },
-    {
-      title: "Artificial Intelligence",
-      description: "Develop intelligent systems and machine learning models",
-    },
-    {
-      title: "Blockchain Development",
-      description: "Build decentralized applications and smart contracts",
-    },
-    {
-      title: "IoT Development",
-      description: "Create connected devices and systems",
-    },
-    {
-      title: "Game Development",
-      description: "Design and build interactive gaming experiences",
-    },
-  ];
-
-  const roleBasedRoadmaps = [
-    {
-      title: "Frontend Developer",
-      description:
-        "Build interactive user interfaces with modern web technologies",
-    },
-    {
-      title: "Backend Developer",
-      description: "Design and implement server-side logic and databases",
-    },
-    {
-      title: "Data Analyst",
-      description:
-        "Extract insights from complex datasets to drive business decisions",
-    },
-    {
-      title: "Android Developer",
-      description: "Create native mobile applications for the Android platform",
-    },
-    {
-      title: "DevOps Engineer",
-      description: "Streamline development and deployment processes",
-    },
-    {
-      title: "Machine Learning Engineer",
-      description: "Develop AI models and intelligent systems",
-    },
-    {
-      title: "iOS Developer",
-      description: "Build applications for Apple's mobile platform",
-    },
-    {
-      title: "Full Stack Developer",
-      description: "Handle both frontend and backend development",
-    },
-    {
-      title: "Cloud Architect",
-      description: "Design and oversee cloud computing strategies",
-    },
-    {
-      title: "Data Scientist",
-      description:
-        "Apply statistical and mathematical models to solve complex problems",
-    },
-  ];
-
-  const articles = [
-    {
-      title: "The Future of AI in Software Development",
-      description:
-        "Explore how artificial intelligence is reshaping the landscape of software development and what it means for developers.",
-      badges: ["AI", "Software Development", "Future Tech"],
-    },
-    {
-      title: "Mastering React Hooks",
-      description:
-        "A comprehensive guide to using React Hooks effectively in your projects.",
-      badges: ["React", "Frontend", "Web Development"],
-    },
-    {
-      title: "DevOps Best Practices for 2023",
-      description:
-        "Learn the latest DevOps strategies to improve your development workflow and deployment processes.",
-      badges: ["DevOps", "CI/CD", "Automation"],
-    },
-    {
-      title: "Introduction to Quantum Computing",
-      description:
-        "Dive into the basics of quantum computing and its potential impact on the tech industry.",
-      badges: ["Quantum Computing", "Future Tech", "Computer Science"],
-    },
-  ];
 
   const tipTopics = [
     {

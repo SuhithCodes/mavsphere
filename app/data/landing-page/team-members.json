@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Suhith Ghanathay",
+    "avatar": "/placeholder.svg",
+    "designation": "Full Stack Developer . Performance Engineer",
+    "github": "https://github.com/suhithCodes",
+    "experience": "4 years",
+    "quote": "Innovation distinguishes between a leader and a follower."
+  },
+  {
+    "name": "Riddhi Dhanani",
+    "avatar": "/placeholder.svg",
+    "designation": "UI . Frontend Developer",
+    "github": "https://github.com/riddhidhanani",
+    "experience": "1 year",
+    "quote": "Design is not just what it looks like and feels like. Design is how it works."
+  },
+  {
+    "name": "Varun Dhanalakota",
+    "avatar": "/placeholder.svg",
+    "designation": "Backend Developer",
+    "github": "https://github.com/johndoe",
+    "experience": "4 years",
+    "quote": "With Spring Boot, I don't configure—I just develop"
+  },
+  {
+    "name": "Pavan Gogineni",
+    "avatar": "/placeholder.svg",
+    "designation": "Backend Developer",
+    "github": "https://github.com/johndoe",
+    "experience": "2 years",
+    "quote": "Good backend code is invisible—it just works"
+  },
+  {
+    "name": "Aliza Gowlani",
+    "avatar": "/placeholder.svg",
+    "designation": "Project Manager",
+    "github": "https://github.com/johndoe",
+    "experience": "6 months",
+    "quote": "The art of management is to make difficult things easy."
+  }
+]

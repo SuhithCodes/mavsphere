@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Frontend Developer",
+    "description": "Build interactive user interfaces with modern web technologies"
+  },
+  {
+    "title": "Backend Developer",
+    "description": "Design and implement server-side logic and databases"
+  },
+  {
+    "title": "Data Analyst",
+    "description": "Extract insights from complex datasets to drive business decisions"
+  },
+  {
+    "title": "Android Developer",
+    "description": "Create native mobile applications for the Android platform"
+  },
+  {
+    "title": "DevOps Engineer",
+    "description": "Streamline development and deployment processes"
+  },
+  {
+    "title": "Machine Learning Engineer",
+    "description": "Develop AI models and intelligent systems"
+  },
+  {
+    "title": "iOS Developer",
+    "description": "Build applications for Apple's mobile platform"
+  },
+  {
+    "title": "Full Stack Developer",
+    "description": "Handle both frontend and backend development"
+  },
+  {
+    "title": "Cloud Architect",
+    "description": "Design and oversee cloud computing strategies"
+  },
+  {
+    "title": "Data Scientist",
+    "description": "Apply statistical and mathematical models to solve complex problems"
+  }
+]

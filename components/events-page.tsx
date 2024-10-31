@@ -33,7 +33,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import "@/styles/events.css";
 
 // Helper function to generate dates for the current week
 const getWeekDates = (date: Date) => {

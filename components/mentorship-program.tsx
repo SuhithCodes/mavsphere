@@ -17,7 +17,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import "@/styles/mentorship-program.css";
 
 export default function MentorshipProgramComponent() {
   const [isDarkMode] = useState(false);

@@ -1,24 +1,16 @@
 "use client";
+
+// React and hooks
 import React, { useState } from "react";
-import {
-  Moon,
-  X,
-  Sun,
-  Users,
-  Briefcase,
-  BookOpen,
-  Calendar,
-} from "lucide-react";
-import {
-  FaFacebook,
-  FaGithub,
-  FaSquareXTwitter,
-  FaInstagram,
-  FaLinkedin,
-} from "react-icons/fa6";
+// UI components from Lucide
+import { Moon, Sun, Users, Briefcase, BookOpen, Calendar } from "lucide-react";
 import { GiCosmicEgg } from "react-icons/gi";
+
+// Custom UI components
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -36,14 +28,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerClose,
-} from "@/components/ui/drawer";
-import {
   Table,
   TableBody,
   TableCell,
@@ -51,16 +35,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -71,165 +45,51 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+
+// Custom components
 import LoginSignup from "./login-signup";
-import "../styles/landing-page.css";
+import NavigationItems from "./landing-page/NavigationItems";
+import AboutUs from "./landing-page/AboutUs";
+
+// Data imports
+import servicesData from "@/app/data/landing-page/services.json";
+import recentActivitiesData from "@/app/data/landing-page/recent-activities.json";
+import upcomingEventsData from "@/app/data/landing-page/upcoming-events.json";
+
+// Add this import
+import Footer from "./landing-page/Footer";
 
 const LandingPage = () => {
+  // State management
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showServices, setShowServices] = useState(false);
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
   const [isLoginSignupVisible, setIsLoginSignupVisible] = useState(false);
   const [isAboutUsOpen, setIsAboutUsOpen] = useState(false);
 
+  // Toggle dark mode
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  const services = [
-    {
-      title: "Networking Opportunities",
-      description: "Connect with professionals and peers in your field.",
-      image:
-        "/images/landing_page/undraw_social_networking_re_i1ex.svg?height=200&width=300&text=Networking",
-      icon: <Users className="h-6 w-6" />,
-      action: "Explore Networks",
-    },
-    {
-      title: "Opportunities Board",
-      description: "Find the latest job openings and internships.",
-      image:
-        "/images/landing_page/undraw_job_offers_re_634p.svg?height=200&width=300&text=Job+Board",
-      icon: <Briefcase className="h-6 w-6" />,
-      action: "Browse Jobs",
-    },
-    {
-      title: "Career Development",
-      description: "Access resources to boost your career growth.",
-      image:
-        "/images/landing_page/career-dev.svg?height=200&width=300&text=Career+Development",
-      icon: <BookOpen className="h-6 w-6" />,
-      action: "View Resources",
-    },
-    {
-      title: "Mentorship Program",
-      description:
-        "Get guidance from experienced professionals in your industry.",
-      image:
-        "/images/landing_page/undraw_candidate_ubwv.svg?height=200&width=300&text=Mentorship",
-      icon: <Users className="h-6 w-6" />,
-      action: "Find a Mentor",
-    },
-    {
-      title: "Skill and Role based Roadmaps",
-      description: "Enhance your skills with our detailed Roadmaps.",
-      image:
-        "/images/landing_page/undraw_navigator_a479.svg?height=200&width=300&text=Workshops",
-      icon: <BookOpen className="h-6 w-6" />,
-      action: "Explore Roadmaps",
-    },
-    {
-      title: "Industry Events",
-      description: "Attend exclusive events and conferences in your field.",
-      image:
-        "/images/landing_page/undraw_events_re_98ue.svg?height=200&width=300&text=Events",
-      icon: <Calendar className="h-6 w-6" />,
-      action: "View Calendar",
-    },
-  ];
+  // Map of icon components
+  const iconComponents = {
+    Users,
+    Briefcase,
+    BookOpen,
+    Calendar,
+  };
 
+  // Process services data to include icon components
+  const services = servicesData.map((service) => ({
+    ...service,
+    icon: iconComponents[service.icon as keyof typeof iconComponents],
+  }));
+
+  // Handle "Learn More" button click
   const handleLearnMoreClick = () => {
     setShowServices((prev) => !prev);
   };
-
-  const teamMembers = [
-    {
-      name: "Suhith Ghanathay",
-      avatar: "/placeholder.svg",
-      designation: "Full Stack Developer, Performance Engineer",
-      github: "https://github.com/suhithCodes",
-      experience: "4 years",
-      quote: "Innovation distinguishes between a leader and a follower.",
-    },
-    {
-      name: "Riddhi Dhanani",
-      avatar: "/placeholder.svg",
-      designation: "UI, Frontend Developer",
-      github: "https://github.com/riddhidhanani",
-      experience: "1 year",
-      quote:
-        "Design is not just what it looks like and feels like. Design is how it works.",
-    },
-    {
-      name: "Varun Dhanalakota",
-      avatar: "/placeholder.svg",
-      designation: "Backend Developer",
-      github: "https://github.com/johndoe",
-      experience: "4 years",
-      quote: "With Spring Boot, I don’t configure—I just develop",
-    },
-    {
-      name: "Pavan Gogineni",
-      avatar: "/placeholder.svg",
-      designation: "Springboot Developer",
-      github: "https://github.com/johndoe",
-      experience: "2 years",
-      quote: "Good backend code is invisible—it just works",
-    },
-    {
-      name: "Aliza Gowlani",
-      avatar: "/placeholder.svg",
-      designation: "Project Manager",
-      github: "https://github.com/johndoe",
-      experience: "0 years",
-      quote: "The art of management is to make difficult things easy.",
-    },
-  ];
-
-  const recentActivities = [
-    {
-      activity: "New discussion: 'The Future of AI in Academia'",
-      group: "AI Research Group",
-      date: "2024-05-01",
-    },
-    {
-      activity: "Job Posted: Assistant Professor in Computer Science",
-      organization: "Tech University",
-      date: "2024-04-28",
-    },
-    {
-      activity: "New Resource: 'Guide to Publishing Your First Academic Paper'",
-      author: "Dr. Jane Smith",
-      date: "2024-04-25",
-    },
-    {
-      activity: "Upcoming Event: International Conference on Climate Change",
-      date: "2024-05-15",
-    },
-  ];
-
-  const upcomingEvents = [
-    {
-      name: "AI and Machine Learning Symposium",
-      date: "May 15-17, 2024",
-      location: "UTA, TX",
-    },
-    {
-      name: "Web Development Conference",
-      date: "June 22-24, 2024",
-      location: "Austin, TX",
-    },
-    {
-      name: "Cybersecurity Summit",
-      date: "July 10-12, 2024",
-      location: "Dallas, TX",
-    },
-    {
-      name: "Data Science Workshop",
-      date: "August 5-7, 2024",
-      location: "Houston, TX",
-    },
-  ];
 
   return (
     <div
@@ -237,192 +97,18 @@ const LandingPage = () => {
         isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
+      {/* Header */}
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
+        {/* Logo and site name */}
         <div className="flex items-center">
           <GiCosmicEgg className="h-8 w-8 mr-2" />
           <h1 className="text-3xl font-bold">MavSphere</h1>
         </div>
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Home</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Home Page
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Browse the recent activities across the various
-                          forums, view featuredProfiles, and notifications of
-                          your activities
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Networking</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Private Messaging
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Talk to your mentors and your connections in a private
-                          chat.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Group Chats
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Collaborate with others in topic-specific group chats.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Forums
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Engage in discussions on various topics in our
-                          community forums.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Opportunities</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Job Listings
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Browse and apply for job opportunities in your field.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Internship Listings
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Find internships to gain valuable experience in your
-                          industry.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
-                  <li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <a
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          href="/"
-                        >
-                          <div className="text-sm font-medium leading-none">
-                            Career Development
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Access Articles, Tools and Tips to boost your
-                            career.
-                          </p>
-                        </a>
-                      </NavigationMenuLink>
-                    </li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Mentorship Program
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Connect with experienced professionals for guidance
-                          and support.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Event</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        href="/"
-                      >
-                        <div className="text-sm font-medium leading-none">
-                          Events
-                        </div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Access and List academic events and conferences
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+
+        {/* Navigation items */}
+        <NavigationItems />
+
+        {/* Header buttons */}
         <nav className="flex items-center space-x-4">
           <Button
             variant="ghost"
@@ -456,7 +142,9 @@ const LandingPage = () => {
         </nav>
       </header>
 
+      {/* Main content */}
       <main className="flex-grow container mx-auto px-4 py-12">
+        {/* Welcome section */}
         <section className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Welcome to MavSphere</h2>
           <p className="text-xl mb-8">
@@ -485,6 +173,7 @@ const LandingPage = () => {
           </div>
         </section>
 
+        {/* Services section */}
         {showServices && (
           <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {services.map((service, index) => (
@@ -498,7 +187,7 @@ const LandingPage = () => {
               >
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    {service.icon}
+                    {service.icon && <service.icon className="h-6 w-6" />}
                     <span className="ml-2">{service.title}</span>
                   </CardTitle>
                 </CardHeader>
@@ -524,7 +213,9 @@ const LandingPage = () => {
           </section>
         )}
 
+        {/* Recent Activities and Upcoming Events */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {/* Recent Activities */}
           <section>
             <h3 className="text-2xl font-bold mb-4">Recent Activities</h3>
             <Card className={isDarkMode ? "bg-gray-800" : "bg-gray-100"}>
@@ -537,7 +228,7 @@ const LandingPage = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {recentActivities.map((activity, index) => (
+                    {recentActivitiesData.map((activity, index) => (
                       <TableRow key={index}>
                         <TableCell>{activity.activity}</TableCell>
                         <TableCell>{activity.date}</TableCell>
@@ -549,6 +240,7 @@ const LandingPage = () => {
             </Card>
           </section>
 
+          {/* Upcoming Events */}
           <section>
             <h3 className="text-2xl font-bold mb-4">Upcoming Events</h3>
             <Card className={isDarkMode ? "bg-gray-800" : "bg-gray-100"}>
@@ -563,34 +255,38 @@ const LandingPage = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {upcomingEvents.map((event, index) => (
+                    {upcomingEventsData.map((event, index) => (
                       <TableRow key={index}>
                         <TableCell>{event.name}</TableCell>
                         <TableCell>{event.date}</TableCell>
                         <TableCell>{event.location}</TableCell>
                         <TableCell>
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button variant="outline">CTF</Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  Submit your research papers for the upcoming
-                                  &quot;{event.name}&quot;.
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  The deadline for submissions is &quot;
-                                  {event.date}&quot;. Visit the conference
-                                  website for more details and guidelines on
-                                  paper submission. Login to know more
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+                          {event.type === "conference" ? (
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Badge variant="outline">CTF</Badge>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    Submit your research papers for the upcoming
+                                    &quot;{event.name}&quot;.
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    The deadline for submissions is &quot;
+                                    {event.date}&quot;. Visit the conference
+                                    website for more details and guidelines on
+                                    paper submission. Login to know more
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          ) : (
+                            <span></span>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -602,105 +298,10 @@ const LandingPage = () => {
         </div>
       </main>
 
-      <footer
-        className={`mt-12 py-8 ${
-          isDarkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-900"
-        }`}
-      >
-        <div className="container mx-auto px-4 flex flex-wrap justify-between">
-          <div className="w-full md:w-1/4 mb-4 md:mb-0">
-            <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
-            <p>Email: sxg0591@mavs.uta.edu</p>
-            <p>Phone: (123) 456-7890</p>
-          </div>
-          <div className="w-full md:w-1/4 mb-4 md:mb-0">
-            <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
-            <ul>
-              <li>
-                <a href="#" className="hover:underline">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  FAQ
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="w-full md:w-1/4 mb-4 md:mb-0">
-            <h3 className="text-lg font-semibold mb-2">Legal</h3>
-            <ul>
-              <li>
-                <a href="#" className="hover:underline">
-                  Terms and Conditions
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  Cookie Policy
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="w-full md:w-1/4">
-            <h3 className="text-lg font-semibold mb-2">Follow Us</h3>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className={`${
-                  isDarkMode
-                    ? "text-gray-300 hover:text-white"
-                    : "text-gray-600 hover:text-gray-800"
-                }`}
-              >
-                <FaFacebook />
-              </a>
-              <a
-                href="#"
-                className={`${
-                  isDarkMode
-                    ? "text-gray-300 hover:text-white"
-                    : "text-gray-600 hover:text-gray-800"
-                }`}
-              >
-                <FaSquareXTwitter />
-              </a>
-              <a
-                href="#"
-                className={`${
-                  isDarkMode
-                    ? "text-gray-300 hover:text-white"
-                    : "text-gray-600 hover:text-gray-800"
-                }`}
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="#"
-                className={`${
-                  isDarkMode
-                    ? "text-gray-300 hover:text-white"
-                    : "text-gray-600 hover:text-gray-800"
-                }`}
-              >
-                <FaLinkedin />
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* Replace the old footer with the new Footer component */}
+      <Footer isDarkMode={isDarkMode} />
 
+      {/* Contact form dialog */}
       <Dialog open={isContactFormOpen} onOpenChange={setIsContactFormOpen}>
         <DialogContent className={isDarkMode ? "bg-gray-800 text-white" : ""}>
           <DialogHeader>
@@ -728,102 +329,14 @@ const LandingPage = () => {
         </DialogContent>
       </Dialog>
 
-      <Drawer open={isAboutUsOpen} onOpenChange={setIsAboutUsOpen}>
-        <DrawerContent
-          className={`${isDarkMode ? "bg-gray-900 text-white" : "bg-white"}`}
-        >
-          <DrawerHeader className="sticky top-0 z-10 backdrop-blur-md bg-opacity-90 bg-inherit">
-            <div className="flex justify-between items-center">
-              <DrawerTitle className="text-4xl font-bold">
-                Team MavSphere
-              </DrawerTitle>
-              <DrawerClose asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <X className="h-8 w-8" />
-                </Button>
-              </DrawerClose>
-            </div>
-            <DrawerDescription
-              className={`mt-4 text-xl font-semibold ${
-                isDarkMode ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              We aim to create a platform that connects students, professionals,
-              and industry leaders to foster growth and collaboration in the
-              tech community.
-            </DrawerDescription>
-          </DrawerHeader>
-          <div className="p-4">
-            <AnimatePresence>
-              <motion.div
-                className="flex flex-wrap gap-4 pb-4 justify-center" // Flex wrap and center the cards
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ staggerChildren: 0.1 }}
-              >
-                {teamMembers.map((member, index) => (
-                  <motion.div
-                    key={index}
-                    className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4" // Responsive widths
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Card
-                      className={`h-full ${
-                        isDarkMode ? "bg-gray-800 text-white" : "bg-gray-50"
-                      } transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl`}
-                    >
-                      <CardContent className="p-6">
-                        <div className="flex flex-col items-center">
-                          <Avatar className="w-32 h-32 mb-4 border-4 border-primary">
-                            <AvatarImage
-                              src={member.avatar}
-                              alt={member.name}
-                            />
-                            <AvatarFallback className="text-2xl font-bold">
-                              {member.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <h4 className="text-2xl font-semibold mb-2">
-                            {member.name}
-                          </h4>
-                          <p
-                            className={`text-lg font-semibold ${
-                              isDarkMode ? "text-gray-300" : "text-gray-600"
-                            } mb-2`}
-                          >
-                            {member.designation} • {member.experience}
-                          </p>
-                          <p className="text-base font-semibold text-center italic mb-4">
-                            &quot;{member.quote}&quot;
-                          </p>
-                          <div className="flex space-x-4">
-                            <a
-                              href={member.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary transition-colors"
-                            >
-                              <FaGithub className="h-6 w-6" />
-                            </a>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </DrawerContent>
-      </Drawer>
+      {/* About Us component */}
+      <AboutUs
+        isOpen={isAboutUsOpen}
+        onClose={() => setIsAboutUsOpen(false)}
+        isDarkMode={isDarkMode}
+      />
 
+      {/* Login/Signup component */}
       <LoginSignup
         isVisible={isLoginSignupVisible}
         onClose={() => setIsLoginSignupVisible(false)}
