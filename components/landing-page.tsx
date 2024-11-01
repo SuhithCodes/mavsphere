@@ -47,7 +47,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 // Custom components
-import LoginSignup from "./login-signup";
+import LoginSignup from "./landing-page/login-signup";
 import NavigationItems from "./landing-page/NavigationItems";
 import AboutUs from "./landing-page/AboutUs";
 
