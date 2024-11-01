@@ -123,12 +123,13 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
   const [error, setError] = useState("");
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const router = useRouter();
+  const [username, setUsername] = useState("");
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("The passwords you entered don't match. Please try again.");
       setShowErrorDialog(true);
       return;
     }
@@ -136,7 +137,6 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
     try {
       const hashedPassword = await hash(password, 12);
       const userId = uuidv4();
-      const username = `${firstName}.${lastName}`.toLowerCase();
 
       const response = await fetch("/api/auth/signup", {
         method: "POST",
@@ -152,8 +152,16 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Signup failed");
+        if (response.status === 400) {
+          setError(data.error);
+        } else {
+          setError("Failed to create account. Please try again later.");
+        }
+        setShowErrorDialog(true);
+        return;
       }
 
       await signIn("credentials", {
@@ -165,7 +173,7 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
       router.push("/settings");
       onClose();
     } catch (error) {
-      setError("Failed to create account");
+      setError("An unexpected error occurred. Please try again later.");
       setShowErrorDialog(true);
     }
   };
@@ -198,6 +206,17 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
               />
             </div>
           </div>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="username">Username</Label>
+          <Input
+            id="username"
+            placeholder="Enter a username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>

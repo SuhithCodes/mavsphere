@@ -1,14 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compare, hash } from "bcryptjs";
-import mysql from "mysql2/promise";
-
-const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-};
+import { compare } from "bcryptjs";
+import { query } from "@/lib/db";
 
 const handler = NextAuth({
   providers: [
@@ -23,15 +16,12 @@ const handler = NextAuth({
           throw new Error("Please enter both email and password");
         }
 
-        const connection = await mysql.createConnection(dbConfig);
-
         try {
-          const [rows]: any = await connection.execute(
-            "SELECT * FROM users WHERE email = ?",
-            [credentials.email]
-          );
+          const rows: any = await query("SELECT * FROM users WHERE email = ?", [
+            credentials.email,
+          ]);
 
-          if (rows.length === 0) {
+          if (!rows || rows.length === 0) {
             throw new Error("No account found with this email");
           }
 
@@ -50,8 +40,8 @@ const handler = NextAuth({
             email: user.email,
             is_mentor: user.is_mentor,
           };
-        } finally {
-          await connection.end();
+        } catch (error) {
+          throw new Error("Authentication failed");
         }
       },
     }),
