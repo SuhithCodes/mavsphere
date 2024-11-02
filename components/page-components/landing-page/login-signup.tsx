@@ -5,9 +5,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
-import { v4 as uuidv4 } from "uuid";
-import { hash } from "bcryptjs";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,20 +14,26 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { signIn, useSession } from "next-auth/react";
+import { v4 as uuidv4 } from "uuid";
 
 type AuthProps = {
   isVisible: boolean;
   onClose: () => void;
   isDarkMode: boolean;
+  setIsLogin?: (value: boolean) => void;
 };
 
 // Login Component
 const Login: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [showErrorDialog, setShowErrorDialog] = useState(false);
   const router = useRouter();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState({
+    title: "",
+    description: "",
+  });
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,13 +45,25 @@ const Login: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
     });
 
     if (result?.error) {
-      setError("No account found with this email or invalid password");
-      setShowErrorDialog(true);
+      setAlertContent({
+        title: "Error",
+        description: "Invalid email or password",
+      });
+      setShowAlert(true);
       return;
     }
 
-    router.push("/home");
-    onClose();
+    setAlertContent({
+      title: "Success",
+      description: "Logged in successfully",
+    });
+    setShowAlert(true);
+
+    // Add a small delay before redirecting
+    setTimeout(() => {
+      router.push("/home");
+      onClose();
+    }, 500);
   };
 
   return (
@@ -95,16 +110,16 @@ const Login: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
         </Button>
       </form>
 
-      <AlertDialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Error</AlertDialogTitle>
-            <AlertDialogDescription>{error}</AlertDialogDescription>
+            <AlertDialogTitle>{alertContent.title}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {alertContent.description}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setShowErrorDialog(false)}>
-              OK
-            </AlertDialogAction>
+            <AlertDialogAction>OK</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -113,38 +128,46 @@ const Login: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
 };
 
 // Signup Component
-const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
+const Signup: React.FC<AuthProps> = ({
+  isVisible,
+  onClose,
+  isDarkMode,
+  setIsLogin,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isMentor, setIsMentor] = useState(false);
-  const [error, setError] = useState("");
-  const [showErrorDialog, setShowErrorDialog] = useState(false);
-  const router = useRouter();
   const [username, setUsername] = useState("");
+  const router = useRouter();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState({
+    title: "",
+    description: "",
+  });
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("The passwords you entered don't match. Please try again.");
-      setShowErrorDialog(true);
+      setAlertContent({
+        title: "Error",
+        description: "Passwords do not match",
+      });
+      setShowAlert(true);
       return;
     }
 
     try {
-      const hashedPassword = await hash(password, 12);
-      const userId = uuidv4();
-
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: userId,
+          id: uuidv4(),
           email,
-          password: hashedPassword,
+          password,
           is_mentor: isMentor,
           firstName,
           lastName,
@@ -152,29 +175,34 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
         }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        if (response.status === 400) {
-          setError(data.error);
-        } else {
-          setError("Failed to create account. Please try again later.");
-        }
-        setShowErrorDialog(true);
-        return;
+        const data = await response.json();
+        throw new Error(data.error || "Signup failed");
       }
 
-      await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
+      setAlertContent({
+        title: "Success",
+        description: "Account created successfully! Please login to continue.",
       });
+      setShowAlert(true);
 
-      router.push("/settings");
-      onClose();
+      // Reset form
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setFirstName("");
+      setLastName("");
+      setUsername("");
+      setIsMentor(false);
+
+      // Switch to login view
+      setIsLogin(true);
     } catch (error) {
-      setError("An unexpected error occurred. Please try again later.");
-      setShowErrorDialog(true);
+      setAlertContent({
+        title: "Error",
+        description: error.message || "Failed to create account",
+      });
+      setShowAlert(true);
     }
   };
 
@@ -206,17 +234,17 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
               />
             </div>
           </div>
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="username">Username</Label>
-          <Input
-            id="username"
-            placeholder="Enter a username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          <div className="space-y-2">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              id="username"
+              placeholder="Choose a username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
@@ -280,16 +308,16 @@ const Signup: React.FC<AuthProps> = ({ isVisible, onClose, isDarkMode }) => {
         </Button>
       </form>
 
-      <AlertDialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Error</AlertDialogTitle>
-            <AlertDialogDescription>{error}</AlertDialogDescription>
+            <AlertDialogTitle>{alertContent.title}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {alertContent.description}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setShowErrorDialog(false)}>
-              OK
-            </AlertDialogAction>
+            <AlertDialogAction>OK</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -322,7 +350,11 @@ const LoginSignup: React.FC<AuthProps> = (props) => {
             {isLogin ? "Welcome Back to MavSphere" : "Join MavSphere"}
           </h1>
 
-          {isLogin ? <Login {...props} /> : <Signup {...props} />}
+          {isLogin ? (
+            <Login {...props} />
+          ) : (
+            <Signup {...props} setIsLogin={setIsLogin} />
+          )}
 
           <div className="mt-6 text-center text-sm">
             {isLogin ? "Don't have an account? " : "Already have an account? "}

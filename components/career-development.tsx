@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,12 +13,52 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import skillBasedRoadmaps from "@/app/data/resources/career-development-page/roadmaps/skillbasedroadmaps.json";
-import roleBasedRoadmaps from "@/app/data/resources/career-development-page/roadmaps/rolebasedroadmaps.json";
 import articles from "@/app/data/resources/career-development-page/articles.json";
+
+interface Roadmap {
+  id: number;
+  title: string;
+  description: string;
+  type: string;
+  category: string;
+  link: string;
+  download_link: string;
+}
 
 export default function CareerDevelopmentComponent() {
   const [selectedTipTopic, setSelectedTipTopic] = useState(null);
+  const [skillBasedRoadmaps, setSkillBasedRoadmaps] = useState<Roadmap[]>([]);
+  const [roleBasedRoadmaps, setRoleBasedRoadmaps] = useState<Roadmap[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRoadmaps = async () => {
+      try {
+        const [skillResponse, roleResponse] = await Promise.all([
+          fetch("/api/roadmaps?type=skill"),
+          fetch("/api/roadmaps?type=role"),
+        ]);
+
+        if (!skillResponse.ok || !roleResponse.ok) {
+          throw new Error("Failed to fetch roadmaps");
+        }
+
+        const skillData = await skillResponse.json();
+        const roleData = await roleResponse.json();
+
+        setSkillBasedRoadmaps(Array.isArray(skillData) ? skillData : []);
+        setRoleBasedRoadmaps(Array.isArray(roleData) ? roleData : []);
+      } catch (error) {
+        console.error("Failed to fetch roadmaps:", error);
+        setSkillBasedRoadmaps([]);
+        setRoleBasedRoadmaps([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoadmaps();
+  }, []);
 
   const tipTopics = [
     {
@@ -44,7 +84,7 @@ export default function CareerDevelopmentComponent() {
     },
   ];
 
-  const RoadmapTable = ({ roadmaps }) => (
+  const RoadmapTable = ({ roadmaps }: { roadmaps: Roadmap[] }) => (
     <Table>
       <TableHeader>
         <TableRow>
@@ -54,12 +94,27 @@ export default function CareerDevelopmentComponent() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {roadmaps.map((roadmap, index) => (
-          <TableRow key={index}>
+        {roadmaps.map((roadmap) => (
+          <TableRow key={roadmap.id}>
             <TableCell className="font-medium">{roadmap.title}</TableCell>
             <TableCell>{roadmap.description}</TableCell>
             <TableCell>
-              <Button size="sm">Check Roadmap</Button>
+              <div className="space-x-2">
+                <Button size="sm" asChild>
+                  <a
+                    href={roadmap.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View
+                  </a>
+                </Button>
+                <Button size="sm" variant="outline" asChild>
+                  <a href={roadmap.download_link} download>
+                    Download
+                  </a>
+                </Button>
+              </div>
             </TableCell>
           </TableRow>
         ))}
@@ -135,12 +190,20 @@ export default function CareerDevelopmentComponent() {
               <TabsTrigger value="skill">Skill-based</TabsTrigger>
               <TabsTrigger value="role">Role-based</TabsTrigger>
             </TabsList>
-            <TabsContent value="skill">
-              <RoadmapTable roadmaps={skillBasedRoadmaps} />
-            </TabsContent>
-            <TabsContent value="role">
-              <RoadmapTable roadmaps={roleBasedRoadmaps} />
-            </TabsContent>
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <p>Loading roadmaps...</p>
+              </div>
+            ) : (
+              <>
+                <TabsContent value="skill">
+                  <RoadmapTable roadmaps={skillBasedRoadmaps} />
+                </TabsContent>
+                <TabsContent value="role">
+                  <RoadmapTable roadmaps={roleBasedRoadmaps} />
+                </TabsContent>
+              </>
+            )}
           </Tabs>
         </TabsContent>
         <TabsContent value="tips">

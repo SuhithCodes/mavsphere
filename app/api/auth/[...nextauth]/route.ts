@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { query } from "@/lib/db";
 
-const handler = NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -38,6 +38,7 @@ const handler = NextAuth({
           return {
             id: user.id,
             email: user.email,
+            username: user.username,
             is_mentor: user.is_mentor,
           };
         } catch (error) {
@@ -49,23 +50,32 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
         token.email = user.email;
+        token.username = user.username;
         token.is_mentor = user.is_mentor;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.email = token.email as string;
         session.user.id = token.sub as string;
+        session.user.email = token.email as string;
+        session.user.username = token.username as string;
         session.user.is_mentor = token.is_mentor as boolean;
       }
       return session;
     },
   },
   pages: {
-    signIn: "/", // Using your landing page as the sign-in page
+    signIn: "/",
   },
-});
+  session: {
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60,
+  },
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions as any);
+
+export { handler as GET, handler as POST, authOptions };

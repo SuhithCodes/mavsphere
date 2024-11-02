@@ -5,6 +5,7 @@ declare module "next-auth" {
     id: string;
     email: string;
     is_mentor: boolean;
+    username: string;
   }
 
   interface Session {

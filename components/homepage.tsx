@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import "../styles/homepage.css"; // Add this line to import the CSS
 import {
   ThumbsUp,
   MessageCircle,
