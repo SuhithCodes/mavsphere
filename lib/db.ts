@@ -15,11 +15,11 @@ const pool = mysql.createPool(dbConfig);
 pool
   .getConnection()
   .then((connection) => {
-    console.log("Database connected successfully");
+    console.log("lib/db.ts: Database connected ");
     connection.release();
   })
   .catch((err) => {
-    console.error("Error connecting to the database:", err);
+    console.error("lib/db.ts: Error connecting to the Database:", err);
   });
 
 export async function query(sql: string, params: any[] = []) {

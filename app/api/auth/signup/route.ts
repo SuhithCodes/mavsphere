@@ -1,20 +1,44 @@
 import { NextResponse } from "next/server";
 import { query } from "@/lib/db";
+import { hash } from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
     const { id, email, password, is_mentor, firstName, lastName, username } =
       await req.json();
 
+    console.log("signup/route.ts:  Signup attempt:", {
+      id,
+      email,
+      firstName,
+      lastName,
+      username,
+      is_mentor,
+    });
+
+    const hashedPassword = await hash(password, 12);
+
     try {
       await query(
         `INSERT INTO users (id, email, password, first_name, last_name, username, is_mentor) 
          VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [id, email, password, firstName, lastName, username, is_mentor]
+        [id, email, hashedPassword, firstName, lastName, username, is_mentor]
       );
 
-      return NextResponse.json({ message: "User created successfully" });
+      console.log("signup/route.ts: User created successfully:", {
+        email,
+        username,
+      });
+
+      return NextResponse.json({
+        message: "User created successfully. Please sign in.",
+      });
     } catch (error: any) {
+      console.error(
+        "signup/route.ts: Database error:",
+        error.code,
+        error.message
+      );
       if (error.code === "ER_DUP_ENTRY") {
         if (error.message.includes("email")) {
           return NextResponse.json(
@@ -31,6 +55,7 @@ export async function POST(req: Request) {
       throw error;
     }
   } catch (error) {
+    console.error("signup/route.ts: Signup error:", error);
     return NextResponse.json(
       { error: "Failed to create user" },
       { status: 500 }

@@ -47,9 +47,9 @@ import {
 } from "@/components/ui/alert-dialog";
 
 // Custom components
-import LoginSignup from "./landing-page/login-signup";
-import NavigationItems from "./landing-page/NavigationItems";
-import AboutUs from "./landing-page/AboutUs";
+import LoginSignup from "./page-components/landing-page/login-signup";
+import NavigationItems from "./page-components/landing-page/NavigationItems";
+import AboutUs from "./page-components/landing-page/AboutUs";
 
 // Data imports
 import servicesData from "@/app/data/landing-page/services.json";
@@ -57,7 +57,7 @@ import recentActivitiesData from "@/app/data/landing-page/recent-activities.json
 import upcomingEventsData from "@/app/data/landing-page/upcoming-events.json";
 
 // Add this import
-import Footer from "./landing-page/Footer";
+import Footer from "./page-components/landing-page/Footer";
 
 const LandingPage = () => {
   // State management

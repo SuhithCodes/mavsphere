@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   NavigationMenu,
@@ -8,7 +10,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
-const NavigationItems = () => {
+export default function NavigationItems() {
   return (
     <NavigationMenu>
       <NavigationMenuList className="space-x-2">
@@ -28,7 +30,7 @@ const NavigationItems = () => {
                     </div>
                     <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                       Browse the recent activities across the various forums,
-                      view featuredProfiles, and notifications of your
+                      view featured profiles, and notifications of your
                       activities
                     </p>
                   </a>
@@ -200,6 +202,4 @@ const NavigationItems = () => {
       </NavigationMenuList>
     </NavigationMenu>
   );
-};
-
-export default NavigationItems;
+}

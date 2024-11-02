@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import {
   Search,
   ChevronDown,
@@ -51,6 +52,14 @@ export default function LayoutComponent({
   children,
   childPage,
 }: LayoutComponentProps) {
+  const { data: session, status } = useSession();
+  const username = session?.user?.username || "Guest";
+
+  // Add loading state handling
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(childPage || "Home");
@@ -58,7 +67,6 @@ export default function LayoutComponent({
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const username = "John Doe";
 
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode");
@@ -180,6 +188,12 @@ export default function LayoutComponent({
       updatePage("Settings");
     }
   }, [pathname]);
+
+  // Add this temporary debugging
+  useEffect(() => {
+    console.log("Session Status:", status);
+    console.log("Session Data:", session);
+  }, [session, status]);
 
   return (
     <div className={`flex h-screen bg-background text-foreground`}>
@@ -403,7 +417,6 @@ export default function LayoutComponent({
             </div>
           </div>
         </header>
-
         {/* Render children (main content) */}
         <div className="p-6">{children}</div>
       </main>
