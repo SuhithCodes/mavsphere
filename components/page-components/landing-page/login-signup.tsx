@@ -180,23 +180,29 @@ const Signup: React.FC<AuthProps> = ({
         throw new Error(data.error || "Signup failed");
       }
 
+      // After successful signup, sign in the user automatically
+      const signInResult = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (signInResult?.error) {
+        throw new Error("Auto login failed after signup");
+      }
+
       setAlertContent({
         title: "Success",
-        description: "Account created successfully! Please login to continue.",
+        description:
+          "Account created successfully! Redirecting to setup your profile...",
       });
       setShowAlert(true);
 
-      // Reset form
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setFirstName("");
-      setLastName("");
-      setUsername("");
-      setIsMentor(false);
-
-      // Switch to login view
-      setIsLogin(true);
+      // Add a small delay before redirecting to show the success message
+      setTimeout(() => {
+        router.push("/getting-started");
+        onClose();
+      }, 1500);
     } catch (error) {
       setAlertContent({
         title: "Error",

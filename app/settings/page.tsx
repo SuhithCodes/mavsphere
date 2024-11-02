@@ -1,6 +1,6 @@
 import SettingsPageComponent from "@/components/settings-page";
 import LayoutComponent from "@/components/layout-component";
-import ProtectedRoute from "@/components/protected-route";
+import ProtectedRoute from "@/components/auth/protected-route";
 
 export default function Page() {
   return (

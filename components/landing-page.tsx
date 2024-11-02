@@ -179,34 +179,35 @@ const LandingPage = () => {
             {services.map((service, index) => (
               <Card
                 key={index}
-                className={
+                className={`flex flex-col h-full ${
                   isDarkMode
                     ? "bg-gray-800 border-gray-700"
                     : "bg-gray-100 border-gray-200"
-                }
+                }`}
               >
                 <CardHeader>
-                  <CardTitle className="flex items-center">
+                  <CardTitle className="flex items-center space-x-2">
                     {service.icon && <service.icon className="h-6 w-6" />}
-                    <span className="ml-2">{service.title}</span>
+                    <span>{service.title}</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-75 object-cover mb-4 rounded"
-                  />
+                <CardContent className="flex-grow p-0">
+                  <div className="h-74 w-full">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter className="mt-4">
                   <CardDescription
-                    className={isDarkMode ? "text-gray-300" : "text-gray-600"}
+                    className={`${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    } text-sm`}
                   >
                     {service.description}
                   </CardDescription>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    {service.action}
-                  </Button>
                 </CardFooter>
               </Card>
             ))}
