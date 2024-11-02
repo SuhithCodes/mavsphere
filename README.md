@@ -80,6 +80,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - TypeScript
 - CSS Modules for styling
 - Node.js (Backend)
+- NextAuth for handling authentication
 
 ## 🏗️ Project Structure
 
