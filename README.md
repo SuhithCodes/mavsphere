@@ -2,7 +2,7 @@
 
 **The Academic Networking Site**
 
-MavSphere is an innovative web application designed to connect graduate students and academics, fostering collaboration and career development within the academic community. Built with **React** and **Next.js 13** using the new app directory structure and **TypeScript**, this platform enables users to explore forums, find job/internship opportunities, participate in academic events, and access mentorship resources.
+MavSphere is an innovative web application designed to connect graduate students and academics, fostering collaboration and career development within the academic community. Built with **React** and **Next.js 13** using the new app directory structure and **JavaScript**, this platform enables users to explore forums, find job/internship opportunities, participate in academic events, and access mentorship resources.
 
 ## 📚 Course Information
 
@@ -77,7 +77,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 - Next.js 13 with the app directory structure
 - React 18
-- TypeScript
+- JavaScript
 - CSS Modules for styling
 - Node.js (Backend)
 - NextAuth for handling authentication
@@ -97,17 +97,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 │   ├    ├── mentorship-program/page    # mentorship program pages
 │   ├── opportunities/page         # opportunites pages
 │   ├── events/page                   # events page
-│   └── layout.tsx                    # App layout
+│   └── layout.jsx                    # App layout
 ├── components/                   # Reusable components
 ├── public/                       # Static assets
 ├── styles/                       # Global and component-specific styles
 ├── lib/                          # Utility functions and custom hooks
-├── types/                        # TypeScript type definitions
 ├── context/                      # React Context providers
 ├── services/                     # API service functions
-├── middleware.ts                 # Next.js middleware
+├── middleware.js                 # Next.js middleware
 ├── next.config.js                # Next.js configuration
-└── tsconfig.json                 # TypeScript configuration
+└── jsconfig.json                 # JavaScript configuration
 ```
 
 ## 🔧 Setup
