@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronsUpDownIcon, ChevronDownIcon, Plus } from "lucide-react";
 import {
   flexRender,
@@ -78,6 +78,10 @@ const jobListings = [
   // Add more job listings here...
 ];
 
+
+
+
+
 const internshipListings = [
   {
     id: "1",
@@ -105,6 +109,10 @@ const internshipListings = [
   },
   // Add more internship listings here...
 ];
+
+
+  
+
 
 const columns = [
   {
@@ -146,6 +154,11 @@ const columns = [
     accessorKey: "company",
     header: "Company",
     cell: ({ row }) => <div>{row.getValue("company")}</div>,
+  },
+  {
+    accessorKey: "website",
+    header: "Website",
+    cell: ({ row }) => <div>{row.getValue("website")}</div>,
   },
   {
     accessorKey: "location",
@@ -198,19 +211,49 @@ const columns = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(job.id)}
-            >
-              Copy job ID
-            </DropdownMenuItem>
+  onClick={() => {
+    // Format all columns into a single string
+    const jobData = `
+      Job ID: ${job.id}
+      Job Title: ${job.title}
+      Company: ${job.company}
+      Location: ${job.location}
+      Website: ${job.website}
+      Type: ${job.type}
+      Salaray Range: ${job.salaryRange}
+      Experience Level: ${job.experienceLevel}
+      Industry: ${job.industry}
+      Skills Required: ${job.skillsRequired}
+    `.trim();
+
+    // Write the formatted string to the clipboard
+    navigator.clipboard.writeText(jobData).then(() => {
+      alert('Job data copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+    });
+  }}
+>
+  Copy job details
+</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View job details</DropdownMenuItem>
-            <DropdownMenuItem>Apply now</DropdownMenuItem>
+            <DropdownMenuItem
+  onClick={() => {
+    const url = job.website.startsWith('http') ? job.website : `https://${job.website}`;
+    window.open(url, '_blank');
+  }}
+>
+  View job details
+</DropdownMenuItem>
+
+            
           </DropdownMenuContent>
         </DropdownMenu>
       );
     },
   },
 ];
+
 
 function DataTable({ data }) {
   const [sorting, setSorting] = React.useState([]);
@@ -296,33 +339,33 @@ function DataTable({ data }) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+  {table.getRowModel().rows?.length ? (
+    table.getRowModel().rows.map((row) => (
+      <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+        {row.getVisibleCells().map((cell) => (
+          <TableCell key={cell.id}>
+  {cell.column.id === "skillsRequired" ? (
+    // Check if the value is an array before using .join()
+    Array.isArray(cell.getValue()) 
+      ? cell.getValue().join(", ") 
+      : cell.getValue() // If it's not an array, just return the value directly
+  ) : (
+    flexRender(cell.column.columnDef.cell, cell.getContext())
+  )}
+</TableCell>
+
+        ))}
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={columns.length} className="h-24 text-center">
+        No results.
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
+
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
@@ -330,24 +373,7 @@ function DataTable({ data }) {
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+        
       </div>
     </div>
   );
@@ -355,11 +381,76 @@ function DataTable({ data }) {
 
 export default function JobBoardComponent() {
   const [listingType, setListingType] = useState("job");
+  const [listings, setListings] = useState({ jobs: [], internships: [] });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formState, setFormState] = useState({
+    title: "",
+    company: "",
+    website: "",
+    location: "",
+    type: "",
+    salaryRange: "",
+    datePosted: "",
+    experienceLevel: "",
+    industry: "",
+    skillsRequired: "",
+  });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
+  const fetchListings = async () => {
+    try {
+      const response = await fetch("/api/listings");
+      const data = await response.json();
+      setListings(data);
+    } catch (error) {
+      console.error("Error fetching listings:", error);
+    }
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Prepare data for submission
+    const data = { ...formState, listingType };
+    console.log("Form data before submission:", data);
+
+    try {
+      const response = await fetch("/api/listings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        fetchListings(); // Refresh listings
+        setFormState({
+          title: "",
+          company: "",
+          website: "",
+          location: "",
+          type: "",
+          salaryRange: "",
+          datePosted: "",
+          experienceLevel: "",
+          industry: "",
+          skillsRequired: "",
+        });
+        setIsModalOpen(false);
+      } else {
+        const errorMessage = await response.json();
+        console.error("Error creating listing:", errorMessage);
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen p-8">
       <div className="container mx-auto">
@@ -373,20 +464,21 @@ export default function JobBoardComponent() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="jobs">
-            <DataTable data={jobListings} />
+            <DataTable data={listings.jobs} />
           </TabsContent>
           <TabsContent value="internships">
-            <DataTable data={internshipListings} />
+            <DataTable data={listings.internships} />
           </TabsContent>
         </Tabs>
       </div>
 
       {/* Create Listing Button and Sheet */}
-      <Sheet>
+      <Sheet onOpenChange={setIsModalOpen} open={isModalOpen} >
         <SheetTrigger asChild>
           <Button
             className="fixed bottom-8 right-8 rounded-full shadow-lg"
             size="lg"
+            onClick={() => setIsModalOpen(true)}
           >
             <Plus className="mr-2 h-4 w-4" /> Create Listing
           </Button>
@@ -397,131 +489,175 @@ export default function JobBoardComponent() {
             <SheetTitle>Create a New Listing</SheetTitle>
           </SheetHeader>
           <form onSubmit={handleSubmit} className="space-y-2">
-            <div>
-              <Label>Listing Type</Label>
-              <RadioGroup
-                defaultValue="job"
-                onValueChange={setListingType}
-                className="flex space-x-4 mt-2"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="job" id="job" />
-                  <Label htmlFor="job">Job Listing</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="internship" id="internship" />
-                  <Label htmlFor="internship">Internship Listing</Label>
-                </div>
-              </RadioGroup>
-            </div>
+  <div>
+    <Label>Listing Type</Label>
+    <RadioGroup
+      defaultValue="job"
+      onValueChange={setListingType}
+      className="flex space-x-4 mt-2"
+    >
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="job" id="job" />
+        <Label htmlFor="job">Job Listing</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="internship" id="internship" />
+        <Label htmlFor="internship">Internship Listing</Label>
+      </div>
+    </RadioGroup>
+  </div>
 
-            <div>
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                placeholder="Enter job title"
-                className="mt-1"
-              />
-            </div>
+  <div>
+    <Label htmlFor="title">Title</Label>
+    <Input
+      id="title"
+      name="title"
+      placeholder="Enter job title"
+      className="mt-1"
+      value={formState.title || ""}
+      onChange={(e) => setFormState({ ...formState, title: e.target.value })}
+    />
+  </div>
 
-            <div>
-              <Label htmlFor="company">Company</Label>
-              <Input
-                id="company"
-                placeholder="Enter company name"
-                className="mt-1"
-              />
-            </div>
+  <div>
+    <Label htmlFor="company">Company</Label>
+    <Input
+      id="company"
+      name="company"
+      placeholder="Enter company name"
+      className="mt-1"
+      value={formState.company || ""}
+      onChange={(e) => setFormState({ ...formState, company: e.target.value })}
+    />
+  </div>
 
-            <div>
-              <Label htmlFor="website">Website</Label>
-              <Input
-                id="website"
-                placeholder="Enter company website"
-                className="mt-1"
-              />
-            </div>
+  <div>
+    <Label htmlFor="website">Website</Label>
+    <Input
+      id="website"
+      name="website"
+      placeholder="Enter company website"
+      className="mt-1"
+      value={formState.website || ""}
+      onChange={(e) => setFormState({ ...formState, website: e.target.value })}
+    />
+  </div>
 
-            <div>
-              <Label htmlFor="location">Location</Label>
-              <Input
-                id="location"
-                placeholder="Enter job location"
-                className="mt-1"
-              />
-            </div>
+  <div>
+    <Label htmlFor="location">Location</Label>
+    <Input
+      id="location"
+      name="location"
+      placeholder="Enter job location"
+      className="mt-1"
+      value={formState.location || ""}
+      onChange={(e) => setFormState({ ...formState, location: e.target.value })}
+    />
+  </div>
 
-            <div>
-              <Label htmlFor="type">Type</Label>
-              <Select>
-                <SelectTrigger id="type">
-                  <SelectValue placeholder="Select job type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="full-time">Full-time</SelectItem>
-                  <SelectItem value="part-time">Part-time</SelectItem>
-                  <SelectItem value="contract">Contract</SelectItem>
-                  <SelectItem value="internship">Internship</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+  <div>
+    <Label htmlFor="type">Type</Label>
+    <Select
+      onValueChange={(value) => setFormState({ ...formState, type: value })}
+      value={formState.type || ""}
+    >
+      <SelectTrigger>
+        <SelectValue placeholder="Select type" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="Full-time">Full-time</SelectItem>
+        <SelectItem value="Part-time">Part-time</SelectItem>
+        <SelectItem value="Internship">Internship</SelectItem>
+        <SelectItem value="Contract">Contract</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
 
-            <div>
-              <Label htmlFor="salaryRange">Salary Range</Label>
-              <Input
-                id="salaryRange"
-                placeholder="Enter salary range"
-                className="mt-1"
-              />
-            </div>
+  <div>
+    <Label htmlFor="salaryRange">Salary Range</Label>
+    <Input
+      id="salaryRange"
+      name="salaryRange"
+      placeholder="Enter salary range"
+      className="mt-1"
+      value={formState.salaryRange || ""}
+      onChange={(e) => setFormState({ ...formState, salaryRange: e.target.value })}
+    />
+  </div>
 
-            <div>
-              <Label htmlFor="datePosted">Date Posted</Label>
-              <Input id="datePosted" type="date" className="mt-1" />
-            </div>
+  <div>
+    <Label htmlFor="datePosted">Date Posted</Label>
+    <Input
+      id="datePosted"
+      type="date"
+      className="mt-1"
+      value={formState.datePosted || ""}
+      onChange={(e) => setFormState({ ...formState, datePosted: e.target.value })}
+    />
+  </div>
 
-            <div>
-              <Label htmlFor="experienceLevel">Experience Level</Label>
-              <Select>
-                <SelectTrigger id="experienceLevel">
-                  <SelectValue placeholder="Select experience level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="entry">Entry-level</SelectItem>
-                  <SelectItem value="mid">Mid-level</SelectItem>
-                  <SelectItem value="senior">Senior</SelectItem>
-                  <SelectItem value="executive">Executive</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+  <div>
+    <Label htmlFor="experienceLevel">Experience Level</Label>
+    <Select
+      onValueChange={(value) => setFormState({ ...formState, experienceLevel: value })}
+      value={formState.experienceLevel || ""}
+    >
+      <SelectTrigger id="experienceLevel" name="experienceLevel">
+        <SelectValue placeholder="Select experience level" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="entry">Entry-level</SelectItem>
+        <SelectItem value="mid">Mid-level</SelectItem>
+        <SelectItem value="senior">Senior</SelectItem>
+        <SelectItem value="executive">Executive</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
 
-            <div>
-              <Label htmlFor="industry">Industry</Label>
-              <Input
-                id="industry"
-                placeholder="Enter industry"
-                className="mt-1"
-              />
-            </div>
+  <div>
+    <Label htmlFor="industry">Industry</Label>
+    <Input
+      id="industry"
+      name="industry"
+      placeholder="Enter industry"
+      className="mt-1"
+      value={formState.industry || ""}
+      onChange={(e) => setFormState({ ...formState, industry: e.target.value })}
+    />
+  </div>
 
-            <div>
-              <Label htmlFor="skillsRequired">Skills Required</Label>
-              <Textarea
-                id="skillsRequired"
-                placeholder="Enter required skills (comma-separated)"
-                className="mt-1"
-              />
-            </div>
+  <div>
+    <Label htmlFor="skillsRequired">Skills Required</Label>
+    <Textarea
+  id="skillsRequired"
+  name="skillsRequired"
+  placeholder="Enter required skills (comma-separated)"
+  className="mt-1"
+  value={formState.skillsRequired || ""}
+  onChange={(e) => {
+    // Update skillsRequired as a comma-separated string
+    setFormState({
+      ...formState,
+      skillsRequired: e.target.value, // Store the value as a string
+    });
+  }}
+/>
 
-            <div className="flex space-x-4">
-              <Button type="submit">Submit</Button>
-              <Button type="button" variant="outline">
-                Cancel
-              </Button>
-            </div>
-          </form>
+
+
+  </div>
+
+  <div className="flex space-x-4">
+    <Button type="submit">Submit</Button>
+    <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
+      Cancel
+    </Button>
+  </div>
+</form>
+
         </SheetContent>
       </Sheet>
     </div>
   );
 }
+
