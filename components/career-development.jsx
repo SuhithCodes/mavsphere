@@ -19,7 +19,10 @@ export default function CareerDevelopmentComponent() {
   const [selectedTipTopic, setSelectedTipTopic] = useState(null);
   const [skillBasedRoadmaps, setSkillBasedRoadmaps] = useState([]);
   const [roleBasedRoadmaps, setRoleBasedRoadmaps] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingArticles, setLoadingArticles] = useState(true);
+  const [totalArticles, setTotalArticles] = useState(0);
 
   useEffect(() => {
     const fetchRoadmaps = async () => {
@@ -46,9 +49,78 @@ export default function CareerDevelopmentComponent() {
         setLoading(false);
       }
     };
-
+    
     fetchRoadmaps();
+    
   }, []);
+  useEffect(() => {
+    fetchArticles();
+  }, []);
+
+  // Add this function near the top of your file, above `fetchArticles` or other utility functions.
+
+const categorizeArticles = (articles) => {
+  return articles.map((article) => {
+    if (
+      article.title.toLowerCase().includes("algorithm") ||
+      
+      article.description.toLowerCase().includes("data structure")
+      
+    ) {
+      return { ...article, category: "Algorithms and Data Structures" };
+    } else if (
+      article.title.toLowerCase().includes("web") ||
+      article.description.toLowerCase().includes("react")
+    ) {
+      return { ...article, category: "Web Development" };
+    } else if (
+      article.title.toLowerCase().includes("ai") ||
+      article.description.toLowerCase().includes("machine learning")
+    ) {
+      return { ...article, category: "Artificial Intelligence" };
+    } else {
+      return { ...article, category: "Other" };
+    }
+  });
+};
+
+
+  const fetchArticles = async () => {
+    const apiKey = "4dbc17e007ab436fb66416009dfb59a8"; // Replace with your actual API key
+    const url = `https://newsapi.org/v1/articles?source=the-next-web&apiKey=${apiKey}`;
+    
+    try {
+      setLoadingArticles(true);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch articles");
+      }
+
+      const data = await response.json();
+
+      // Assuming the data contains a `total` field and `data` array
+      if (data.articles && Array.isArray(data.articles)) {
+        // Categorize articles here
+        const categorizedArticles = categorizeArticles(data.articles);
+        setArticles(categorizedArticles);
+        setTotalArticles(data.totalResults || 0);
+      } else {
+        console.warn("No articles found in the response");
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    } finally {
+      setLoadingArticles(false);
+    }
+  };
+
+
+  
+  
+  
+  
+  
 
   const tipTopics = [
     {
@@ -115,32 +187,26 @@ export default function CareerDevelopmentComponent() {
   const ArticleList = ({ articles }) => (
     <div className="space-y-4">
       {articles.map((article, index) => (
-        <Card
-          key={index}
-          className="flex flex-col md:flex-row overflow-hidden h-auto"
-        >
+        <Card key={index} className="flex flex-col md:flex-row overflow-hidden h-auto">
           <div className="flex-1 p-4">
-            <CardTitle className="text-xl font-semibold mb-2">
-              {article.title}
-            </CardTitle>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              {article.description}
-            </p>
-            <div className="flex flex-wrap gap-2 mb-1">
-              {article.badges.map((badge, badgeIndex) => (
-                <Badge key={badgeIndex} variant="secondary">
-                  {badge}
-                </Badge>
-              ))}
-            </div>
+            <CardTitle className="text-xl font-semibold mb-2">{article.title}</CardTitle>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{article.description}</p>
             <div className="flex justify-end">
-              <Button variant="outline">Read More</Button>
+              <Button variant="outline" onClick={() => window.open(article.url, "_blank")}>Read More</Button>
             </div>
           </div>
         </Card>
       ))}
+      {totalArticles > articles.length && !loadingArticles && (
+        <div className="flex justify-center mt-8">
+          <Button onClick={() => fetchArticles()}>Load More Articles</Button>
+        </div>
+      )}
     </div>
   );
+  
+
+  
 
   const TipsList = ({ tips, onSelectTopic }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -165,6 +231,7 @@ export default function CareerDevelopmentComponent() {
       ))}
     </div>
   );
+  
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -197,34 +264,44 @@ export default function CareerDevelopmentComponent() {
           </Tabs>
         </TabsContent>
         <TabsContent value="tips">
-          {selectedTipTopic ? (
-            <div>
-              <Button
-                variant="ghost"
-                onClick={() => setSelectedTipTopic(null)}
-                className="mb-4"
-              >
-                ← Back to Topics
-              </Button>
-              <h2 className="text-2xl font-bold mb-4">
-                {selectedTipTopic.title}
-              </h2>
-              <p className="mb-6">{selectedTipTopic.description}</p>
-              <h3 className="text-xl font-semibold mb-4">Related Articles</h3>
-              <ArticleList
-                articles={articles.filter((article) =>
-                  selectedTipTopic.relatedArticles.includes(article.title)
-                )}
-              />
-            </div>
-          ) : (
-            <TipsList tips={tipTopics} onSelectTopic={setSelectedTipTopic} />
-          )}
-        </TabsContent>
+  {selectedTipTopic ? (
+    <div>
+      <Button
+        variant="ghost"
+        onClick={() => setSelectedTipTopic(null)}
+        className="mb-4"
+      >
+        ← Back to Topics
+      </Button>
+      <h2 className="text-2xl font-bold mb-4">
+        {selectedTipTopic.title}
+      </h2>
+      <p className="mb-6">{selectedTipTopic.description}</p>
+      <h3 className="text-xl font-semibold mb-4">Related Articles</h3>
+      <ArticleList
+        articles={articles.filter(
+          (article) => article.category === selectedTipTopic.title
+        )}
+      />
+    </div>
+  ) : (
+    <TipsList tips={tipTopics} onSelectTopic={setSelectedTipTopic} />
+  )}
+</TabsContent>
+
         <TabsContent value="articles">
-          <ArticleList articles={articles} />
-        </TabsContent>
+  {loading ? (
+    <div className="flex justify-center py-8">
+      <p>Loading articles...</p>
+    </div>
+  ) : (
+    <ArticleList articles={articles} />
+  )}
+</TabsContent>
+
       </Tabs>
     </div>
   );
+
+  
 }

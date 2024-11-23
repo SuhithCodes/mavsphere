@@ -47,9 +47,7 @@ export default function LayoutComponent({ children, childPage }) {
   const username = session?.user?.username || "Guest";
 
   // Add loading state handling
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
+
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [openCollapsible, setOpenCollapsible] = useState(null);
